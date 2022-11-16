@@ -1,7 +1,6 @@
-package recipe;
-//This class is the presenter that visualizes the Recipe. It creates a simple UI that allow users to enter the information
+package UI;
+//This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
 //desired to create a new recipe.
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -30,9 +29,9 @@ public class RecipeDisplay implements ActionListener{
         //
 
 
-        //This code block creates the text field of the Recipe output
+        //This code block creates the text field of the entity.Recipe output
         nameText=new JTextField("");
-        n = new JTextField("Name of Recipe");
+        n = new JTextField("Name of a entity.Recipe");
         n.setBounds(350, 20, 120, 30);
         n.setEditable(false);
         nameText.setBounds(200,50, 400,30);

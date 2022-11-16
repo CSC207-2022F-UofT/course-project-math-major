@@ -1,4 +1,5 @@
-package recipe;
+package entity;
+
 import java.util.ArrayList;
 import java.util.Map;
 //This class helps the user with the creation of the recipe. It takes the information from the presenter and then
@@ -10,7 +11,7 @@ public class Recipe {
     String steps;
 
     int calories;
-    //The Recipe constructor that initiates the Recipe object.
+    //The entity.Recipe constructor that initiates the entity.Recipe object.
     public Recipe(String name, String picture, ArrayList<Map<String, Integer>> ingredients, String steps, int calories)
     {
         this.name = name;
@@ -19,7 +20,7 @@ public class Recipe {
         this.ingredients = ingredients;
         this.calories = calories;
     }
-    //The getter methods for Recipe that returns their element.
+    //The getter methods for entity.Recipe that returns their element.
     public ArrayList<Map<String, Integer>> getIngredients()
     {
         return ingredients;
