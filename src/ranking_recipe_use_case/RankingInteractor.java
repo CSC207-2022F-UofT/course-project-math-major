@@ -1,24 +1,20 @@
 package ranking_recipe_use_case;
 
-import entity.Recipe;
-import entity.UserAccount;
+import entity.Rank;
+import java.util.Map;
 
-import java.util.ArrayList;
-
-public class RankingInteractor implements RankingInputBoundary{
-    final UserAccount userAccount;
-
-    public RankingInteractor(UserAccount userAccount) {
-        this.userAccount = userAccount;
+public class RankingInteractor implements RankingInputBoundary {
+    private final Rank rank;
+    private final BankingOutputBoundary bankingOutputBoundary;
+    public RankingInteractor(Rank rank, BankingOutputBoundary bankingOutputBoundary) {
+        this.rank = rank;
+        this.bankingOutputBoundary=bankingOutputBoundary;
     }
 
     @Override
-    public void rank(ArrayList<Recipe> all_recipes) {
-
-    }
-
-    @Override
-    public void display_rank() {
-
+    public void rank(Map<String, Integer> rated_recipes) {
+        rank.setRank(rated_recipes);
+        bankingOutputBoundary.showRank(rank.getRank());
     }
 }
+

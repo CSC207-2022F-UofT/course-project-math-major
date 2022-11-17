@@ -3,10 +3,9 @@ package ranking_recipe_use_case;
 import entity.Recipe;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface RankingInputBoundary {
-    void rank(ArrayList<Recipe> all_recipes);
-
-    void display_rank();
+    void rank(Map<String, Integer> rated_recipes);
 
 }

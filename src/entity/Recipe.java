@@ -6,11 +6,11 @@ import java.util.Map;
 //stores them to create a recipe.
 public class Recipe {
     ArrayList<Map<String, Integer>> ingredients;
-    String name;
-    String picture;
-    String steps;
+    private final String name;
+    private final String picture;
+    private final String steps;
 
-    int calories;
+    private final int calories;
     //The entity.Recipe constructor that initiates the entity.Recipe object.
     public Recipe(String name, String picture, ArrayList<Map<String, Integer>> ingredients, String steps, int calories)
     {
@@ -36,6 +36,12 @@ public class Recipe {
         return picture;
     }
 
+    public String getSteps() {
+        return steps;
+    }
 
+    public int getCalories() {
+        return calories;
+    }
 }
 

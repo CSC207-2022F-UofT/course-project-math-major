@@ -1,17 +1,18 @@
 package Controller;
 
 import ranking_recipe_use_case.RankingInputBoundary;
-
-import java.util.ArrayList;
+import java.util.Map;
 
 public class RankingController {
-    private final RankingInputBoundary rankingInputBoundary;
+    final RankingInputBoundary rankingInputBoundary;
+
 
     public RankingController(RankingInputBoundary rankingInputBoundary) {
         this.rankingInputBoundary = rankingInputBoundary;
     }
 
-    public void rank(ArrayList<Recipe> all_recipes){
-        rankingInputBoundary.rank(ArrayList<Recipe>);
+    public void rank(Map<String, Integer> rated_recipes){
+        rankingInputBoundary.rank(rated_recipes);
     }
+
 }
