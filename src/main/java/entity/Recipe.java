@@ -43,5 +43,6 @@ public class Recipe {
     public int getCalories() {
         return calories;
     }
+    //The Getter methods for these
 }
 
