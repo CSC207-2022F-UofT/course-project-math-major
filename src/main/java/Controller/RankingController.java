@@ -1,6 +1,7 @@
 package Controller;
 
 import ranking_recipe_use_case.RankingInputBoundary;
+
 import java.util.Map;
 
 public class RankingController {
