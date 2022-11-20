@@ -8,9 +8,9 @@ import java.util.Map;
 
 public interface RatedGateway {
 
-    Map<String, Map<Recipe, Double>> getRatedRecipes() throws IOException;
+    Map<String, Map<String, Double>> getRatedRecipes() throws IOException;
 
-    void saveRatedRecipes(Map<String, Map<Recipe, Double>> rated_recipes) throws IOException;
+    void saveRatedRecipes(Map<String, Map<String, Double>> rated_recipes) throws IOException;
 
 }
 
