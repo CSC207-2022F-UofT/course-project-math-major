@@ -22,18 +22,44 @@ public class RecipeRatingInteracor{
     UserAccount user_account;
 
     Map<Recipe, Double> recipe_scores = new HashMap<Recipe, Double>();
+    Map<String, Map<Recipe, Double>> all_recipe_scores = new Map<String, recipe_scores>();
 
 
     private final AccountGateway gateway = new AccountGatewayImplementation();
 
-    public Map<Integer, Map<Recipe, Double>> RecipeRatingInteractor() throws IOException {
+    public Map<String, Map<Recipe, Double>> RecipeRatingInteractor(String Userid) throws IOException {
         ArrayList<UserAccount> accounts = gateway.getAccounts();
         for (int i = 0; i < accounts.size(); i++){
             UserAccount user_account = accounts.get(i);
 
-            ArrayList<Recipe> recipe_book1 = user_account.getRecipeBook();
+            if (user_account.getUserid().equals(Userid)){
+                ArrayList<Recipe> user_recipe_book = user_account.getRecipeBook();
+                float weight = user_account.getWeight();
+                float height = user_account.getHeight();
+                char gender = user_account.getGender();
+                int age = user_account.getAge();
+                if (gender == 'm'){
+                    ideal_cal = 66.4730 + 13.7516 * weight + 5.0033 * height - 6.7550 * age;
+                } else {
+                    ideal_cal = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
+                }
+                for (int k = 0; k < user_recipe_book.size(); k++){
+                    temp_score = 0;
+                    total_cal = user_recipe_book.get(i).getCalories();
+                    interval = ideal_cal/5;
+                    if (total_cal >= ideal_cal*2){
+                        temp_score = 1;
+                    } else if (total_cal < ideal_cal) {
+                        temp_score = total_cal/interval;
+                    } else {
+                        temp_score = 5-((total_cal-ideal_cal)/interval);
+                    }
+                    recipe_scores.put(user_recipe_book.get(i), temp_score);
+                }
 
-            Map<Recipe, Double> recipe_scores = new HashMap<Recipe, Double>();
+
+
+
 
             /*
             String temp_green_type = "vegetable or fruits";
@@ -90,33 +116,11 @@ public class RecipeRatingInteracor{
             /*
             Calories Rating:
             */
-            float weight = user_account.getWeight();
-            float height = user_account.getHeight();
-            char gender = user_account.getGender();
-            int age = user_account.getAge();
+
             /*
             men: 66.4730 + 13.7516 x weight in kg + 5.0033 x height in cm – 6.7550 x age in years
             women: 655.0955 + 9.5634 x weight in kg + 1.8496 x height in cm – 4.6756 x age in years
             */
-            if (gender == 'm'){
-                ideal_cal = 66.4730 + 13.7516 * weight + 5.0033 * height - 6.7550 * age;
-            } else {
-                ideal_cal = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
-            }
-            for (int k = 0; k < recipe_book1.size(); k++){
-                temp_score = 0;
-                total_cal = recipe_book1.get(i).getCalories();
-                interval = ideal_cal/5;
-                if (total_cal >= ideal_cal*2){
-                    temp_score = 1;
-                } else if (total_cal < ideal_cal) {
-                    temp_score = total_cal/interval;
-                } else {
-                    temp_score = 5-((total_cal-ideal_cal)/interval);
-                }
-
-                user_scores.add(temp_score);
-
 
 
 
