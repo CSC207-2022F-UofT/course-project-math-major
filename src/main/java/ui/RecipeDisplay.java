@@ -1,15 +1,9 @@
-package UI;
+package ui;
 //This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
 //desired to create a new recipe.
-import Controller.RecipeController;
 
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
 
 public class RecipeDisplay implements ActionListener{
     // This class

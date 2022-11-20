@@ -1,4 +1,4 @@
-package Gateway;
+package gateway;
 import entity.UserAccount;
 import java.io.*;
 import java.util.ArrayList;

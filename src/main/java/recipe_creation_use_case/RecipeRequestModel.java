@@ -1,4 +1,4 @@
-package ranking_recipe_use_case;
+package recipe_creation_use_case;
 import java.util.ArrayList;
 public class RecipeRequestModel {
     private String name;
