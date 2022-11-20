@@ -13,7 +13,7 @@ public class RankingController {
     }
 
     public void rank(Map<String, Integer> rated_recipes){
-        rankingInputBoundary.rank(rated_recipes);
+        // rankingInputBoundary.rank(rated_recipes);
     }
 
 }
