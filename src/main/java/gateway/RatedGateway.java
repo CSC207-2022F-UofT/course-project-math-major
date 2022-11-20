@@ -4,12 +4,13 @@ import entity.Recipe;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface RatedGateway {
 
-    ArrayList<Recipe> getRatedRecipes() throws IOException;
+    Map<String, Map<Recipe, Double>> getRatedRecipes() throws IOException;
 
-    void saveRatedRecipes(ArrayList<Recipe> rated_recipes) throws IOException;
+    void saveRatedRecipes(Map<String, Map<Recipe, Double>> rated_recipes) throws IOException;
 
 }
 
