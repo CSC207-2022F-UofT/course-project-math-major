@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import ranking_recipe_use_case.RankingInputBoundary;
 
