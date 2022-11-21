@@ -1,8 +1,8 @@
 package controller;
 
-import ranking_recipe_use_case.RankingInputBoundary;
-
-import java.util.Map;
+import ranking_use_case.RankingInputBoundary;
+import ranking_use_case.RankingRequestModel;
+import ranking_use_case.RankingResponseModel;
 
 public class RankingController {
     final RankingInputBoundary rankingInputBoundary;
@@ -12,8 +12,8 @@ public class RankingController {
         this.rankingInputBoundary = rankingInputBoundary;
     }
 
-    public void rank(Map<String, Integer> rated_recipes){
-        // rankingInputBoundary.rank(rated_recipes);
+    public RankingResponseModel rank(RankingRequestModel rankingRequestModel){
+        return rankingInputBoundary.rank(rankingRequestModel);
     }
 
 }
