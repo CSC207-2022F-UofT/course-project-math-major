@@ -12,8 +12,8 @@ public class RankingController {
         this.rankingInputBoundary = rankingInputBoundary;
     }
 
-    public RankingResponseModel rank(RankingRequestModel rank){
-        return rankingInputBoundary.rank(rank);
+    public RankingResponseModel rank(RankingRequestModel rankingRequestModel){
+        return rankingInputBoundary.rank(rankingRequestModel);
     }
 
 }

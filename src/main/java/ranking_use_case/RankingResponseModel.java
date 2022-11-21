@@ -3,7 +3,6 @@ package ranking_use_case;
 import entity.Rank;
 
 import java.util.List;
-import java.util.Map;
 
 public class RankingResponseModel {
     String userid;

@@ -17,6 +17,7 @@ public class RankingInteractor implements RankingInputBoundary {
     @Override
     public RankingResponseModel rank(RankingRequestModel requestModel) {
         List<Rank> rankList = requestModel.getRankList();
+        // sort data
         Collections.sort(rankList,new RankComparator());
         RankingResponseModel rankingResponseModel = new RankingResponseModel();
         rankingResponseModel.setUserid(requestModel.getUserId());

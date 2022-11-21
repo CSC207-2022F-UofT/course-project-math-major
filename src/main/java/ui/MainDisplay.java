@@ -2,10 +2,9 @@ package ui;
 
 import controller.RankingController;
 import entity.Rank;
-import entity.RankFactory;
 import gateway.InMemoryRankGatewayImpl;
+import gateway.RankGateway;
 import gateway.RankGatewayImpl;
-import gateway.RankingGateway;
 import presenter.RankingPresenter;
 import ranking_use_case.RankingInteractor;
 import ranking_use_case.RankingRequestModel;
@@ -14,15 +13,13 @@ import ranking_use_case.RankingResponseModel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class MainDisplay extends JFrame{
 
-    private RankingGateway rankingGateway = new RankingGateway();
+    private RankGateway rankGateway = null;
 
     public static void main(String[] args){
         MainDisplay queryDisplay = new MainDisplay();
@@ -68,7 +65,7 @@ public class MainDisplay extends JFrame{
             }
             else{
                 try {
-                    List<Rank> rankList = rankingGateway.getRank(userId);
+                    List<Rank> rankList = rankGateway.getRank(userId);
                     if(rankList==null||rankList.isEmpty()){
                         JOptionPane.showMessageDialog(this,"can't find the user's data");
                         return;
@@ -82,9 +79,9 @@ public class MainDisplay extends JFrame{
                     RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
 
                     new RankDisplay(rankingResponseModel);
-                } catch (IOException ioException) {
+                } catch (Exception exception) {
                     JOptionPane.showMessageDialog(this,"can't find the user's data");
-                    ioException.printStackTrace();
+                    exception.printStackTrace();
                 }
             }
         });
@@ -92,64 +89,12 @@ public class MainDisplay extends JFrame{
 
     public void initFileData(){
         RankGatewayImpl rankGateway = new RankGatewayImpl();
-        boolean load = false;
-        try {
-            Map<String, List<Rank>> rankList = rankGateway.getRanks();
-            if(rankList!=null&&!rankList.isEmpty()){
-                load = true;
-            }
-
-            for(String key:rankList.keySet()){
-                RankingRequestModel rankingRequestModel = new RankingRequestModel(key,rankList.get(key));
-                rankingGateway.save(rankingRequestModel);
-            }
-
-        } catch (IOException e) {
-            System.err.println("can't load data , will init");
-//            e.printStackTrace();
-        }
-
-        if(load){
-            return;
-        }
-
-        System.out.println("init Data:");
-        Map<String, java.util.List<Rank>> ranks = new HashMap<>();
-        java.util.List<Rank> rankList = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            double rvalue = (double)new Random().nextInt(1000);
-            Rank rank = RankFactory.getInstance().createRank("recp"+(i+1),rvalue);
-            rankList.add(rank);
-        }
-        ranks.put("admin",rankList);
-        System.out.println(ranks);
-        try {
-            rankGateway.saveRanks(ranks);
-            RankingRequestModel rankingRequestModel = new RankingRequestModel("admin",rankList);
-            rankingGateway.save(rankingRequestModel);
-        } catch (IOException e) {
-            System.err.println("save ranks error");
-//            e.printStackTrace();
-        }
+        this.rankGateway = rankGateway;
     }
 
     public void initInMemoryData(){
-
-    }
-
-
-    public Map<String, java.util.List<Rank>> getData(){
-        RankGatewayImpl ratedGatewayImplementation = new RankGatewayImpl();
-        Map<String, java.util.List<Rank>> ratedRecipes = new HashMap<>();
-
-        System.out.println("get Data:");
-        try {
-            ratedRecipes = ratedGatewayImplementation.getRanks();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("load data:"+ratedRecipes);
-        return ratedRecipes;
+        InMemoryRankGatewayImpl inMemoryRankGateway = new InMemoryRankGatewayImpl();
+        this.rankGateway = inMemoryRankGateway;
     }
 
 }

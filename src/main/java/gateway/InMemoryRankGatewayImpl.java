@@ -16,19 +16,12 @@ public class InMemoryRankGatewayImpl implements RankGateway {
     }
 
     private void loadData() {
-        InMemoryRankGatewayImpl inMemoryRankGateway = new InMemoryRankGatewayImpl();
         boolean load = false;
         try {
-            Map<String, List<Rank>> rankList = inMemoryRankGateway.getRanks();
+            Map<String, List<Rank>> rankList = this.getRanks();
             if(rankList!=null&&!rankList.isEmpty()){
                 load = true;
             }
-
-            for(String key:rankList.keySet()){
-                RankingRequestModel rankingRequestModel = new RankingRequestModel(key,rankList.get(key));
-                rankingGateway.save(rankingRequestModel);
-            }
-
         } catch (IOException e) {
             System.err.println("can't load data , will init");
 //            e.printStackTrace();
@@ -38,7 +31,7 @@ public class InMemoryRankGatewayImpl implements RankGateway {
             return;
         }
 
-        System.out.println("init Data:");
+        System.out.println("init memory Data:");
         Map<String, java.util.List<Rank>> ranks = new HashMap<>();
         java.util.List<Rank> rankList = new ArrayList<>();
         for(int i=0;i<20;i++){
@@ -49,9 +42,7 @@ public class InMemoryRankGatewayImpl implements RankGateway {
         ranks.put("memory",rankList);
         System.out.println(ranks);
         try {
-            inMemoryRankGateway.saveRanks(ranks);
-            RankingRequestModel rankingRequestModel = new RankingRequestModel("memory",rankList);
-            rankingGateway.save(rankingRequestModel);
+            this.saveRanks(ranks);
         } catch (IOException e) {
             System.err.println("save ranks error");
 //            e.printStackTrace();
@@ -66,5 +57,10 @@ public class InMemoryRankGatewayImpl implements RankGateway {
     @Override
     public void saveRanks(Map<String, List<Rank>> ranks) throws IOException {
         this.ranks = ranks;
+    }
+
+    @Override
+    public List<Rank> getRank(String userId) {
+        return ranks.get(userId);
     }
 }
