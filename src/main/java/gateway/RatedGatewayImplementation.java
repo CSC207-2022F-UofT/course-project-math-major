@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class RatedGatewayImplementation implements RatedGateway{
     @Override
-    public void saveRatedRecipes(Map<String, Map<Recipe, Double>> rated_recipes) throws IOException {
+    public void saveRatedRecipes(Map<String, Map<String, Double>> rated_recipes) throws IOException {
         FileOutputStream f1  = new FileOutputStream("RatedRecipe.csv");
         ObjectOutputStream o1 = new ObjectOutputStream(f1);
         o1.writeObject(rated_recipes);
@@ -16,11 +16,11 @@ public class RatedGatewayImplementation implements RatedGateway{
     }
 
     @Override
-    public Map<String, Map<Recipe, Double>> getRatedRecipes() throws IOException {
+    public Map<String, Map<String, Double>> getRatedRecipes() throws IOException {
         FileInputStream f2 = new FileInputStream("RatedRecipe.csv\"");
         ObjectInputStream o2 = new ObjectInputStream(f2);
         try {
-            Map<String, Map<Recipe, Double>> accounts = (Map<String, Map<Recipe, Double>>) o2.readObject();
+            Map<String, Map<String, Double>> accounts = (Map<String, Map<String, Double>>) o2.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

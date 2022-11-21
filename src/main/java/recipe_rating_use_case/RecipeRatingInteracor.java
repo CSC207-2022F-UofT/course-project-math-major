@@ -19,17 +19,18 @@ public class RecipeRatingInteracor {
     private double temp_score;
     private double total_cal;
 
+    private String Recipe_name;
     private String RightUserID;
 
     UserAccount user_account;
 
-    Map<Recipe, Double> recipe_scores = new HashMap<Recipe, Double>();
-    Map<String, Map<Recipe, Double>> all_recipe_scores;
+    Map<String, Double> recipe_scores = new HashMap<String, Double>();
+    Map<String, Map<String, Double>> all_recipe_scores;
 
 
     private final AccountGateway gateway = new AccountGatewayImplementation();
 
-    public Map<String, Map<Recipe, Double>> RecipeRatingInteractor(String Userid) throws IOException {
+    public Map<String, Map<String, Double>> RecipeRatingInteractor(String Userid) throws IOException {
         ArrayList<UserAccount> accounts = gateway.getAccounts();
         for (int i = 0; i < accounts.size(); i++) {
             UserAccount user_account = accounts.get(i);
@@ -47,6 +48,7 @@ public class RecipeRatingInteracor {
                     ideal_cal = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
                 }
                 for (int k = 0; k < user_recipe_book.size(); k++) {
+                    Recipe_name = user_recipe_book.get(i).getName();
                     temp_score = 0;
                     total_cal = user_recipe_book.get(i).getCalories();
                     interval = ideal_cal / 5;
@@ -57,7 +59,7 @@ public class RecipeRatingInteracor {
                     } else {
                         temp_score = 5 - ((total_cal - ideal_cal) / interval);
                     }
-                    recipe_scores.put(user_recipe_book.get(i), temp_score);
+                    recipe_scores.put(user_recipe_book.get(i).getName(), temp_score);
                 }
             }
         }
