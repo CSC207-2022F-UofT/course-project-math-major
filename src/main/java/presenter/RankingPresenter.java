@@ -1,14 +1,19 @@
 package presenter;
 
-import entity.Rank;
 import ranking_use_case.RankingOutputBoundary;
 import ranking_use_case.RankingResponseModel;
-
-import java.util.List;
+import ui.RankDisplay;
 
 public class RankingPresenter implements RankingOutputBoundary {
+
+    private RankDisplay rankDisplay;
+
+    public RankingPresenter(RankDisplay rankDisplay){
+        this.rankDisplay = rankDisplay;
+    }
+
     @Override
-    public RankingResponseModel showRank(RankingResponseModel rankingResponseModel) {
-        return rankingResponseModel;
+    public void showRank(RankingResponseModel rankingResponseModel) {
+        rankDisplay.showFrame(rankingResponseModel);
     }
 }

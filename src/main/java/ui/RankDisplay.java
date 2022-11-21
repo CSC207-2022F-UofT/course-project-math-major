@@ -7,20 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RankDisplay extends JFrame{
-    private RankingResponseModel rankingResponseModel;
 
-    public RankDisplay(RankingResponseModel rankingResponseModel){
-        this.rankingResponseModel = rankingResponseModel;
+    public RankDisplay(){
         this.setTitle("rank");
         this.setLayout(null);
         this.setSize(1000,800);
-
-        initFrame();
-
-        this.setVisible(true);
+//        initFrame();
     }
 
-    private void initFrame() {
+    public void showFrame(RankingResponseModel rankingResponseModel) {
         Font font = new Font("Microsoft JhengHei", Font.BOLD, 26);
         JLabel titleLabel = new JLabel("Personal Ranking");
         titleLabel.setFont(font);
@@ -69,5 +64,7 @@ public class RankDisplay extends JFrame{
         closeButton.addActionListener(e -> {
             System.exit(0);
         });
+
+        this.setVisible(true);
     }
 }

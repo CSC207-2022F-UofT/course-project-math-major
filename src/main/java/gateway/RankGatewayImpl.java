@@ -2,7 +2,6 @@ package gateway;
 
 import entity.Rank;
 import entity.RankFactory;
-import ranking_use_case.RankingRequestModel;
 
 import java.io.*;
 import java.util.*;

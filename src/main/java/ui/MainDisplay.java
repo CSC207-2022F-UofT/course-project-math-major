@@ -12,10 +12,7 @@ import ranking_use_case.RankingResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainDisplay extends JFrame{
 
@@ -23,8 +20,8 @@ public class MainDisplay extends JFrame{
 
     public static void main(String[] args){
         MainDisplay queryDisplay = new MainDisplay();
-        queryDisplay.initInMemoryData();
-//        queryDisplay.initFileData();
+//        queryDisplay.initInMemoryData();
+        queryDisplay.initFileData();
         queryDisplay.display();
     }
 
@@ -64,27 +61,34 @@ public class MainDisplay extends JFrame{
                 return;
             }
             else{
-                try {
-                    List<Rank> rankList = rankGateway.getRank(userId);
-                    if(rankList==null||rankList.isEmpty()){
-                        JOptionPane.showMessageDialog(this,"can't find the user's data");
-                        return;
-                    }
-
-                    RankingRequestModel rankingRequestModel = new RankingRequestModel(userId,rankList);
-                    RankingPresenter rankingPresenter = new RankingPresenter();
-                    RankingInteractor rankingInteractor = new RankingInteractor(rankingRequestModel,rankingPresenter);
-
-                    RankingController rankingController = new RankingController(rankingInteractor);
-                    RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
-
-                    new RankDisplay(rankingResponseModel);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this,"can't find the user's data");
-                    exception.printStackTrace();
-                }
+                showRank(userId);
             }
         });
+    }
+
+    public void showRank(String userId){
+        try {
+            RankingRequestModel rankingRequestModel = new RankingRequestModel(userId,null);
+
+            RankDisplay rankDisplay = new RankDisplay();
+            RankingPresenter rankingPresenter = new RankingPresenter(rankDisplay);
+            RankingInteractor rankingInteractor = new RankingInteractor(this.rankGateway,rankingRequestModel,rankingPresenter);
+
+            RankingController rankingController = new RankingController(rankingInteractor);
+            RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
+
+            List<Rank> rankList = rankingResponseModel.getRankList();
+            if(rankList==null||rankList.isEmpty()){
+                JOptionPane.showMessageDialog(this,"can't find the user's data");
+                return;
+            }
+
+            rankingPresenter.showRank(rankingResponseModel);
+
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(this,"can't find the user's data");
+            exception.printStackTrace();
+        }
     }
 
     public void initFileData(){
