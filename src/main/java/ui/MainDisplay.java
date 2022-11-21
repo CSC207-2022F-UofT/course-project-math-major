@@ -26,7 +26,7 @@ public class MainDisplay extends JFrame {
     }
 
     private void display() {
-        this.setTitle("query");
+        this.setTitle("RankingSystem");
         this.setSize(1000, 800);
         this.setLayout(null);
 

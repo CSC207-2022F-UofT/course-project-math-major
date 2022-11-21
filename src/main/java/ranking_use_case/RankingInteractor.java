@@ -21,7 +21,6 @@ public class RankingInteractor implements RankingInputBoundary {
         this.rankingOutputBoundary = rankingOutputBoundary;
     }
 
-
     @Override
     public RankingResponseModel rank(RankingRequestModel requestModel) {
         String userId = requestModel.getUseId();

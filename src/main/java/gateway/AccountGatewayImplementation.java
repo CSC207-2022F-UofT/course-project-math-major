@@ -1,10 +1,10 @@
 package gateway;
+
 import entity.UserAccount;
 import java.io.*;
 import java.util.ArrayList;
 
-
-public class AccountGatewayImplementation implements AccountGateway{
+public class AccountGatewayImplementation implements AccountGateway {
 
     @Override
     public void saveAccounts(ArrayList<UserAccount> accounts) throws IOException {
@@ -26,6 +26,5 @@ public class AccountGatewayImplementation implements AccountGateway{
         f2.close();
         return null;
     }
-
 
 }
