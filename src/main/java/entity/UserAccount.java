@@ -6,13 +6,12 @@ public class UserAccount {
     private final String userid;
     private String password;
     private int age;
-    private final char gender;
-    private int weight;
-    private int height;
-    private int BMI;
+    private char gender;
+    private float weight;
+    private float height;
     private ArrayList<Recipe> RecipeBook;
 
-    public UserAccount(String userid, String password, int age, char gender, int weight, int height) {
+    public UserAccount(String userid, String password, int age, char gender, float weight, float height) {
         this.userid = userid;
         this.password = password;
         this.age = age;
@@ -37,16 +36,12 @@ public class UserAccount {
         return gender;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
-    }
-
-    public int getBMI() {
-        return BMI;
     }
 
     public ArrayList<Recipe> getRecipeBook() {
@@ -61,16 +56,14 @@ public class UserAccount {
         this.age = age;
     }
 
-    public void setWeight(int weight) {
+    public void setGender(char gender) {this.gender = gender;}
+
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
-    }
-
-    public void setBMI(int BMI) {
-        this.BMI = BMI;
     }
 
     public void setRecipeBook(ArrayList<Recipe> recipeBook) {

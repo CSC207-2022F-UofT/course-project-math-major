@@ -1,6 +1,6 @@
 package recipe_rating_use_case;
-import Gateway.AccountGateway;
-import Gateway.AccountGatewayImplementation;
+import gateway.AccountGateway;
+import gateway.AccountGatewayImplementation;
 import entity.Recipe;
 import entity.UserAccount;
 

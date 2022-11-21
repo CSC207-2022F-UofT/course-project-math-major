@@ -27,5 +27,4 @@ public class AccountGatewayImplementation implements AccountGateway{
         return null;
     }
 
-
 }
