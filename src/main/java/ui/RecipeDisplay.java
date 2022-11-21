@@ -2,84 +2,153 @@ package ui;
 //This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
 //desired to create a new recipe.
 
+import controller.RecipeController;
+import entity.Ingredient;
+import entity.Recipe;
+
+import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-public class RecipeDisplay implements ActionListener{
-    // This class
+public class RecipeDisplay {
 
-    private static final int rWidth = 1800;
-    private static final int rLength = 1000;
-    JTextField n,nameText,s,pictureText,p,i;
-    JTextArea stepText;
-    JButton b=new JButton("Create");
+    final int width = 1200;
+    final int height = 900;
 
-    JTable ingre;
+    RecipeController recipeController = new RecipeController();
 
-    String data[][]={ {"","",""},{"","",""},{"","",""},{"","",""},{"","",""},{"","",""},{"","",""}};
-    String column[]={"Ingredients","Amount(Numbers Only)"};
+    JList<Recipe> recipeList;
+    JLabel iLabel;
+    JList<Ingredient> ingredientList;
 
+    DefaultListModel<Ingredient> ingredientsListModel;
+    JTextArea steps;
 
     RecipeDisplay()
     {
-        JFrame f=new JFrame();//creating instance of JFrame
+        JFrame f = new JFrame("Recipe Application");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+        f.pack(); // automatically size the frame
+        f.setSize(width, height);
 
-        //creating instance of JButton
-        b.setBounds(700,800,100, 40);//x axis, y axis, width, height
-        //Creates the JTextFields--- which are text boxes in which the users could enter their information
-        //
+        // We create a bottom JPanel to place everything on.
+        // This sets the Border Layout to have a horizontal gap of 5
+        // and a vertical gap of 10 between each widget.
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout(5, 5));
+        f.add(panel);
 
 
-        //This code block creates the text field of the entity.Recipe output
-        //This block of code is responsible for creating the titles and the name/steps//picture input for the users
-        nameText=new JTextField("");
-        n = new JTextField("Name of the Recipe");
-        n.setBounds(350, 20, 160, 30);
-        n.setEditable(false);
-        nameText.setBounds(200,50, 400,30);
-        s = new JTextField("How to Make");
-        s.setBounds(380, 460, 100, 30);
-        s.setEditable(false);
-        stepText=new JTextArea("");
-        stepText.setBounds(100,500, 1200,280);
-        f.add(nameText); f.add(stepText);
-        pictureText = new JTextField("");
-        p = new JTextField("The file directory of the picture");
-        p.setBounds(325, 150, 210, 30);
-        pictureText.setBounds(200,200, 400,30);
-        f.add(p);
-        f.add(pictureText);
-        //
-        i = new JTextField("Ingredients and their quantities");
-        i.setBounds(1000, 20, 190, 30);
-        i.setEditable(false);
-        ingre = new JTable(data, column);
-        ingre.setRowHeight(35);
-        ingre.setBounds(800, 50, 600, 400);
-        f.add(ingre);
-        f.add(i);
-        f.add(b);//adding button in JFrame
-        b.addActionListener(this);
-        f.add(s);f.add(n);
-        f.add(nameText);
-        f.setSize(rWidth,rLength);//400 width and 500 height
-        f.setLayout(null);//using no layout managers
-        f.setVisible(true);//making the frame visible
+        // Title
+        JLabel title = new JLabel("Recipe & Calories", SwingConstants.CENTER);
+        title.setPreferredSize(new Dimension(width, 40));
+        title.setFont(new Font("Sans Serif", Font.BOLD, 20));
+        title.setBorder(new EmptyBorder(10, 0,10,0));
+        // title.setHorizontalAlignment(0);
+        panel.add(title, BorderLayout.PAGE_START); // top
+
+
+        /** Creation of a Panel to place on the Left (Recipe List) */
+        JPanel recipePanel = new JPanel();
+        recipePanel.setPreferredSize(new Dimension(width/3, height/2));
+        panel.add(recipePanel, BorderLayout.LINE_START);
+
+        // Recipe Label
+        JLabel rLabel = new JLabel("Select a recipe", SwingConstants.CENTER);
+        rLabel.setPreferredSize(new Dimension(width/3 - 50, 50));
+        rLabel.setFont(new Font("Sans Serif", Font.BOLD, 14));
+        recipePanel.add(rLabel);
+
+        // Recipe JList
+        List<Recipe> recipes = recipeController.getRecipes();
+        recipeList = new JList(recipes.toArray());
+        recipeList.setFixedCellHeight(30);
+
+        recipeList.setPreferredSize(new Dimension(width/3 - 50, height/2));
+        JScrollPane rsp = new JScrollPane(recipeList);
+        rsp.setPreferredSize(new Dimension(width/3 - 50, height/2));
+        recipePanel.add(rsp);
+        // handle selection change event
+        recipeList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                Recipe selectedRecipe = recipeList.getSelectedValue();
+                iLabel.setText("Ingredients for " + selectedRecipe.getName());
+                ingredientsListModel.clear();
+                ingredientsListModel.addAll(selectedRecipe.getIngredients());
+                steps.setText(selectedRecipe.getSteps());
+            }
+        });
+
+
+
+        /** Creation of a Panel to place in the Center (Ingredient List) */
+        JPanel ingredientPanel = new JPanel();
+        ingredientPanel.setPreferredSize(new Dimension(width/3, height/2));
+        panel.add(ingredientPanel, BorderLayout.CENTER);
+
+        // Ingredient Label
+        iLabel = new JLabel("No Recipe Selected", SwingConstants.CENTER);
+        iLabel.setPreferredSize(new Dimension(width/3 - 50, 50));
+        iLabel.setFont(new Font("Sans Serif", Font.BOLD, 14));
+        ingredientPanel.add(iLabel);
+
+        // Ingredient JList
+        ingredientsListModel = new DefaultListModel<>();
+        ingredientList = new JList(ingredientsListModel);
+        ingredientList.setFixedCellHeight(30);
+        ingredientList.setPreferredSize(new Dimension(width/3 - 50, height/2));
+        JScrollPane isp = new JScrollPane(ingredientList);
+        isp.setPreferredSize(new Dimension(width/3 - 50, height/2));
+        ingredientPanel.add(isp);
+
+
+        /** Creation of a Panel to place on the right (Steps) */
+        JPanel StepPanel = new JPanel();
+        StepPanel.setPreferredSize(new Dimension(width/3, height/2));
+        panel.add(StepPanel, BorderLayout.LINE_END);
+
+        // Step Label
+        JLabel sLabel = new JLabel("How to make:", SwingConstants.CENTER);
+        sLabel.setPreferredSize(new Dimension(width/3 - 50, 50));
+        sLabel.setFont(new Font("Sans Serif", Font.BOLD, 14));
+        StepPanel.add(sLabel);
+
+        steps = new JTextArea();
+        steps.setPreferredSize(new Dimension(width/3 - 50, height/2));
+        steps.setEditable(false);
+        StepPanel.add(steps);
+
+
+        /** Creation of a Panel to place on the bottom (Creation) */
+        JButton createRecipeBtn = new JButton("Create Recipe");
+        panel.add(createRecipeBtn, BorderLayout.PAGE_END);
+        createRecipeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // open new Page :)
+                new CreateRecipe();
+            }
+        });
+
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String name = nameText.getText();
-        String steps = stepText.getText();
-
-
-
-    }
-
-
 
     public static void main(String[] args) {
-        new RecipeDisplay();
+
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI. (after everything is loaded)
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new RecipeDisplay();
+            }
+        });
     }
 
 }

@@ -1,27 +1,37 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 //This class helps the user with the creation of the recipe. It takes the information from the presenter and then
 //stores them to create a recipe.
 public class Recipe {
-    ArrayList<Map<String, Integer>> ingredients;
-    private final String name;
-    private final String picture;
-    private final String steps;
+    List<Ingredient> ingredients;
+    private String name;
+    private String picture;
+    private String steps;
 
-    private final int calories;
+    private int calories;
+
     //The entity.Recipe constructor that initiates the entity.Recipe object.
-    public Recipe(String name, String picture, ArrayList<Map<String, Integer>> ingredients, String steps, int calories)
+    public Recipe(String name, String picture, List<Ingredient> ingredients, String steps)
     {
         this.name = name;
         this.picture = picture;
         this.steps = steps;
         this.ingredients = ingredients;
-        this.calories = calories;
     }
+
+    public Recipe(String name, int calories, String steps) {
+        this.name = name;
+        this.calories = calories;
+        this.steps = steps;
+        this.ingredients = new ArrayList<>();
+    }
+
     //The getter methods for entity.Recipe that returns their element.
-    public ArrayList<Map<String, Integer>> getIngredients()
+    public List<Ingredient> getIngredients()
     {
         return ingredients;
     }
@@ -40,9 +50,16 @@ public class Recipe {
         return steps;
     }
 
-    public int getCalories() {
+    public double getCalories() {
         return calories;
     }
-    //The Getter methods for these
+
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+    }
+    @Override
+    public String toString() {
+        return String.format("%s, %d cals", name, calories);
+    }
 }
 
