@@ -1,9 +1,12 @@
 package gateway;
 
+import entity.Rank;
+import ranking_use_case.RankingRequestModel;
+
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 public interface IRankingGateway {
-    Map<String, Integer> getRank(String username) throws IOException;
-    void updateRank() throws IOException;
+    List<Rank> getRank(String username) throws IOException;
+    void save(RankingRequestModel requestModel);
 }

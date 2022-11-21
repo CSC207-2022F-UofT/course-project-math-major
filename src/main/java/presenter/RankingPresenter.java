@@ -1,12 +1,14 @@
 package presenter;
 
-import ranking_recipe_use_case.RankingOutputBoundary;
+import entity.Rank;
+import ranking_use_case.RankingOutputBoundary;
+import ranking_use_case.RankingResponseModel;
 
-import java.util.Map;
+import java.util.List;
 
 public class RankingPresenter implements RankingOutputBoundary {
     @Override
-    public void showRank(Map<String, Integer> rank) {
-
+    public RankingResponseModel showRank(RankingResponseModel rankingResponseModel) {
+        return rankingResponseModel;
     }
 }
