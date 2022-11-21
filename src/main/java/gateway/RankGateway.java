@@ -11,5 +11,5 @@ public interface RankGateway {
 
     void saveRanks(Map<String, List<Rank>> ranks) throws IOException;
 
-    List<Rank> getrank(String userId);
+    List<Rank> getRank(String userId);
 }

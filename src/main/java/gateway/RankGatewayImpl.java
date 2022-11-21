@@ -3,21 +3,21 @@ package gateway;
 import entity.Rank;
 import entity.RankFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
-public class InMemoryRankGatewayImpl implements RankGateway {
-    Map<String, List<Rank>> ranks = new HashMap<>();
+public class RankGatewayImpl implements RankGateway {
+    private Map<String, List<Rank>> ranks = new HashMap<>();
 
-    public InMemoryRankGatewayImpl() {
+    public RankGatewayImpl() {
         loadData();
     }
 
     private void loadData() {
         boolean load = false;
         try {
-            Map<String, List<Rank>> ranklist = this.getRanks();
-            if (ranklist != null && ranklist.isEmpty()) {
+            Map<String, List<Rank>> rankList = this.getRanks();
+            if (rankList != null && rankList.isEmpty()) {
                 load = true;
             }
         } catch (IOException e) {
@@ -28,8 +28,7 @@ public class InMemoryRankGatewayImpl implements RankGateway {
         if (load) {
             return;
         }
-
-        System.out.println("init memory Data:");
+        System.out.println("init file Data:");
         Map<String, List<Rank>> ranks = new HashMap<>();
         List<Rank> rankList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
@@ -37,24 +36,31 @@ public class InMemoryRankGatewayImpl implements RankGateway {
             Rank rank = RankFactory.getInstance().createRank("name" + (i + 1), rvalue);
             rankList.add(rank);
         }
-        ranks.put("memory", rankList);
+        ranks.put("admin", rankList);
         System.out.println(ranks);
-        try {
-            this.saveRanks(ranks);
-        } catch (IOException e) {
-            System.err.println("save ranks error");
-            // e.printStackTrace();
-        }
     }
 
     @Override
     public Map<String, List<Rank>> getRanks() throws IOException {
-        return ranks;
+        FileInputStream f2 = new FileInputStream("RatedRecipe.csv");
+        ObjectInputStream o2 = new ObjectInputStream(f2);
+        try {
+            Map<String, List<Rank>> ranks = (Map<String, List<Rank>>) o2.readObject();
+            this.ranks = ranks;
+            return ranks;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        f2.close();
+        return null;
     }
 
     @Override
     public void saveRanks(Map<String, List<Rank>> ranks) throws IOException {
-        this.ranks = ranks;
+        FileOutputStream f1  = new FileOutputStream("RatedRecipe.csv");
+        ObjectOutputStream o1 = new ObjectOutputStream(f1);
+        o1.writeObject(ranks);
+        f1.close();
     }
 
     @Override
@@ -62,3 +68,4 @@ public class InMemoryRankGatewayImpl implements RankGateway {
         return ranks.get(userId);
     }
 }
+
