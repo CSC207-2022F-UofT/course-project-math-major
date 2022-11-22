@@ -1,4 +1,4 @@
-package RatedUseCase;
+package ratedusecase;
 
 import gateway.AccountGateway;
 import gateway.AccountGatewayImplementation;
