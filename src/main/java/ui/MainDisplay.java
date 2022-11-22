@@ -6,7 +6,6 @@ import gateway.InMemoryRankGatewayImpl;
 import gateway.RankGateway;
 import gateway.RankGatewayImpl;
 import presenter.RankingPresenter;
-import ranking_use_case.RankingInputBoundary;
 import ranking_use_case.RankingInteractor;
 import ranking_use_case.RankingRequestModel;
 import ranking_use_case.RankingResponseModel;
@@ -71,7 +70,7 @@ public class MainDisplay extends JFrame {
 
             RankDisplay rankDisplay = new RankDisplay();
             RankingPresenter rankingPresenter = new RankingPresenter(rankDisplay);
-            RankingInputBoundary rankingInteractor = new RankingInteractor(this.rankGateway, rankingRequestModel, rankingPresenter);
+            RankingInteractor rankingInteractor = new RankingInteractor(this.rankGateway, rankingRequestModel, rankingPresenter);
 
             RankingController rankingController = new RankingController(rankingInteractor);
             RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);

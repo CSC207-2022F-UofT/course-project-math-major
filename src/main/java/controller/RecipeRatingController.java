@@ -1,9 +1,6 @@
-package Controller;
+package controller;
 
-import RatedUseCase.RatedInteractor;
-import gateway.AccountGateway;
-import gateway.AccountGatewayImplementation;
-import gateway.RatedGateway;
+import ratedusecase.RatedInteractor;
 
 import java.io.IOException;
 

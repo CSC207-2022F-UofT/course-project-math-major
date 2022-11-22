@@ -53,7 +53,7 @@ public class RankDisplay extends JFrame {
         this.add(returnButton);
 
         JButton closeButton = new JButton("Close");
-        closeButton.setBounds(400, 600, 100, 30);
+        closeButton.setBounds(500, 600, 100, 30);
         this.add(closeButton);
 
         returnButton.addActionListener(e -> {
