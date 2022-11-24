@@ -1,6 +1,8 @@
 package ui;
-//This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
-//desired to create a new recipe.
+/*This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
+desired to create a new recipe.
+This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
+load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay */
 
 import controller.RecipeController;
 import entity.Ingredient;
@@ -15,7 +17,7 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class RecipeDisplay {
+public class RecipeInitialDisplay {
 
     final int width = 1200;
     final int height = 900;
@@ -29,7 +31,7 @@ public class RecipeDisplay {
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
 
-    public RecipeDisplay()
+    public RecipeInitialDisplay()
     {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +68,7 @@ public class RecipeDisplay {
         recipePanel.add(rLabel);
 
         // Recipe JList
-        List<Recipe> recipes = recipeController.getRecipes();
+        List<Recipe> recipes = recipeController.getInitialRecipes();
         recipeList = new JList(recipes.toArray());
         recipeList.setFixedCellHeight(30);
 
@@ -146,9 +148,10 @@ public class RecipeDisplay {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new RecipeDisplay();
+                new RecipeInitialDisplay();
             }
         });
     }
 
 }
+
