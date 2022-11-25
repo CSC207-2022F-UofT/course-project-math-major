@@ -5,18 +5,18 @@ import entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//This Class is the implementation of the interface Recipe Gateway
+//This class stores a list of all the recipes
 public class RecipeGatewayImplementation implements RecipeGateway {
-    static List<Recipe> recipes = new ArrayList<>();
+    static ArrayList<Recipe> recipes = new ArrayList<>();
 
     @Override
-    public List<Recipe> getRecipes() {
-
+    public ArrayList<Recipe> getRecipes() {
 
         return recipes;
     }
 
-
+    //function for adding a recipe, it takes values giving from controller/use cases and then create an enitity
     @Override
     public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step) {
 
@@ -28,9 +28,9 @@ public class RecipeGatewayImplementation implements RecipeGateway {
         }
         recipes.add(r);
     }
-
+    //Loads the Initial Recipes stored in the dataset
     @Override
-    public List<Recipe> getInitialRecipes() {
+    public ArrayList<Recipe> getInitialRecipes() {
         String r1_step = "Cook the apple\nPut in the sugar\nfinally poll some water";
         Recipe r1 = new Recipe("Apple Juice", 512, r1_step);
         r1.addIngredient(new Ingredient("Apple", 2, "Entire"));
@@ -42,10 +42,7 @@ public class RecipeGatewayImplementation implements RecipeGateway {
         r2.addIngredient(new Ingredient("Bread", 1, "Piece"));
 
 
-        if(recipes.contains(r2) == false)
-        {
-            recipes.add(r2);
-        }
+        recipes.add(r2);
 
         recipes.add(r1);
         return recipes;
