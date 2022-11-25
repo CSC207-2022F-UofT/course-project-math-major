@@ -1,11 +1,8 @@
 package ratedusecase;
 
-import gateway.AccountGateway;
-import gateway.AccountGatewayImplementation;
+import gateway.*;
 import entity.Recipe;
 import entity.UserAccount;
-import gateway.RatedGateway;
-import gateway.RatedGatewayImplementation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,16 +23,18 @@ public class RatedInteractor {
     Map<String, Double> recipe_scores = new HashMap<String, Double>();
     Map<String, Map<String, Double>> all_recipe_scores;
 
-    private final AccountGateway gateway = new AccountGatewayImplementation();
+    private final AccountGateway accgateway = new AccountGatewayImplementation();
+    private final RecipeGateway recipegateway = new RecipeGatewayImplementation();
     private final RatedGateway ratedgateway = new RatedGatewayImplementation();
 
+
     public Map<String, Double> RateUser_AllRecipe (String Userid) throws IOException {
-        ArrayList<UserAccount> accounts = gateway.getAccounts();
+        ArrayList<UserAccount> accounts = accgateway.getAccounts();
+        ArrayList<Recipe> user_recipes = recipegateway.getRecipes();
         for (int i = 0; i < accounts.size(); i++) {
             UserAccount user_account = accounts.get(i);
             if (user_account.getUserid().equals(Userid)) {
                 RightUserID = user_account.getUserid();
-                ArrayList<Recipe> user_recipe_book = user_account.getRecipeBook();
                 float weight = user_account.getWeight();
                 float height = user_account.getHeight();
                 char gender = user_account.getGender();
@@ -45,10 +44,10 @@ public class RatedInteractor {
                 } else {
                     ideal_cal = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
                 }
-                for (int k = 0; k < user_recipe_book.size(); k++) {
-                    Recipe_name = user_recipe_book.get(i).getName();
+                for (int k = 0; k < user_recipes.size(); k++) {
+                    Recipe_name = user_recipes.get(i).getName();
                     temp_score = 0;
-                    total_cal = user_recipe_book.get(i).getCalories();
+                    total_cal = user_recipes.get(i).getCalories();
                     interval = ideal_cal / 5;
                     if (total_cal >= ideal_cal * 2) {
                         temp_score = 1;
@@ -57,7 +56,7 @@ public class RatedInteractor {
                     } else {
                         temp_score = 5 - ((total_cal - ideal_cal) / interval);
                     }
-                    recipe_scores.put(user_recipe_book.get(i).getName(), temp_score);
+                    recipe_scores.put(user_recipes.get(i).getName(), temp_score);
                 }
             }
         }
