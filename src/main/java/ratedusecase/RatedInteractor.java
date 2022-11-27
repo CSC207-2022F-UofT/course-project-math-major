@@ -55,6 +55,9 @@ public class RatedInteractor {
                         temp_score = total_cal / interval;
                     } else {
                         temp_score = 5 - ((total_cal - ideal_cal) / interval);
+                        if (temp_score < 0){
+                            temp_score = 0;
+                        }
                     }
                     recipe_scores.put(user_recipes.get(i).getName(), temp_score);
                 }

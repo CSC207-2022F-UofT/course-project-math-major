@@ -13,7 +13,7 @@ public class RatedGatewayImplementation implements RatedGateway {
     }
 
     public Map<String, Map<String, Double>> getRatedRecipes() throws IOException {
-        FileInputStream f2 = new FileInputStream("RatedRecipe.csv\"");
+        FileInputStream f2 = new FileInputStream("RatedRecipe.csv");
         ObjectInputStream o2 = new ObjectInputStream(f2);
         try {
             Map<String, Map<String, Double>> accounts = (Map<String, Map<String, Double>>) o2.readObject();
