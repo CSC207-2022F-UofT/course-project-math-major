@@ -12,28 +12,27 @@ public class AccountInfoController {
         this.aiib = aiib;
     }
 
-    public void UpdatePassword(String password) throws IOException {
-        this.aiib.UpdatePassword(password);
+    public void UpdatePassword(String password, String userid) throws IOException {
+        this.aiib.UpdatePassword(password, userid);
     }
 
-    public void UpdateAge(int age) throws IOException {
-        this.aiib.UpdateAge(age);
+    public void UpdateAge(int age, String userid) throws IOException {
+        this.aiib.UpdateAge(age, userid);
     }
 
-    public void UpdateGender(char gender) throws IOException {
-        this.aiib.UpdateGender(gender);
+    public void UpdateGender(char gender, String userid) throws IOException {
+        this.aiib.UpdateGender(gender, userid);
     }
 
-    public void UpdateWeight(float weight) throws IOException {
-        this.aiib.UpdateWeight(weight);
+    public void UpdateWeight(float weight, String userid) throws IOException {
+        this.aiib.UpdateWeight(weight, userid);
     }
 
-    public void UpdateHeight(float height) throws IOException {
-        this.aiib.UpdateHeight(height);
+    public void UpdateHeight(float height, String userid) throws IOException {
+        this.aiib.UpdateHeight(height, userid);
     }
 
-    public String GiveFeedback(float height, float weight) {
-        return this.aiib.BMIAndFeedback(weight, height);
+    public String GiveFeedback(float height, float weight, String userid) {
+        return this.aiib.GiveFeedback(weight, height, userid);
     }
-
 }
