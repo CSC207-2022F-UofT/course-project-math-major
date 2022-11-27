@@ -20,6 +20,7 @@ public class AccountGatewayImplementation implements AccountGateway {
         ObjectInputStream o2 = new ObjectInputStream(f2);
         try {
             ArrayList<UserAccount> accounts = (ArrayList<UserAccount>) o2.readObject();
+            return accounts;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

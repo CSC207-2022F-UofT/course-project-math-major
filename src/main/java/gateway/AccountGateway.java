@@ -9,5 +9,5 @@ public interface AccountGateway {
     ArrayList<UserAccount> getAccounts() throws IOException;
 
     void saveAccounts(ArrayList<UserAccount> accounts) throws IOException;
-    
+
 }

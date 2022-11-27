@@ -30,7 +30,7 @@ public class RatedInteractor {
 
     public Map<String, Double> RateUser_AllRecipe (String Userid) throws IOException {
         ArrayList<UserAccount> accounts = accgateway.getAccounts();
-        ArrayList<Recipe> user_recipes = recipegateway.getRecipes();
+        ArrayList<Recipe> user_recipes = (ArrayList<Recipe>) recipegateway.getRecipes();
         for (int i = 0; i < accounts.size(); i++) {
             UserAccount user_account = accounts.get(i);
             if (user_account.getUserid().equals(Userid)) {
@@ -55,6 +55,9 @@ public class RatedInteractor {
                         temp_score = total_cal / interval;
                     } else {
                         temp_score = 5 - ((total_cal - ideal_cal) / interval);
+                        if (temp_score < 0){
+                            temp_score = 0;
+                        }
                     }
                     recipe_scores.put(user_recipes.get(i).getName(), temp_score);
                 }

@@ -4,16 +4,16 @@ import java.io.IOException;
 
 public interface AccountInfoInputBoundary {
 
-    void UpdatePassword(String password) throws IOException;
+    void UpdatePassword(String password, String userid) throws IOException;
 
-    void UpdateAge(int age) throws IOException;
+    void UpdateAge(int age, String userid) throws IOException;
 
-    void UpdateGender(char gender) throws IOException;
+    void UpdateGender(char gender, String userid) throws IOException;
 
-    void UpdateWeight(float weight) throws IOException;
+    void UpdateWeight(float weight, String userid) throws IOException;
 
-    void UpdateHeight(float height) throws IOException;
+    void UpdateHeight(float height, String userid) throws IOException;
 
-    String BMIAndFeedback(float weight, float height);
+    String GiveFeedback(float weight, float height, String userid);
 
 }
