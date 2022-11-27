@@ -66,7 +66,12 @@ public class RatedInteractor {
     public void RatedInteractor(String UserID) throws IOException {
         Map<String, Double> NewlyRated_Recipes = this.RateUser_AllRecipe(UserID);
         all_recipe_scores = ratedgateway.getRatedRecipes();
-        all_recipe_scores.replace(UserID, NewlyRated_Recipes);
+        if (all_recipe_scores.containsKey(UserID)){
+            all_recipe_scores.replace(UserID, NewlyRated_Recipes);
+        }
+        else {
+            all_recipe_scores.put(UserID, NewlyRated_Recipes);
+        }
         ratedgateway.saveRatedRecipes(all_recipe_scores);
     }
 }
