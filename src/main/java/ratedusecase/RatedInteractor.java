@@ -30,7 +30,7 @@ public class RatedInteractor {
 
     public Map<String, Double> RateUser_AllRecipe (String Userid) throws IOException {
         ArrayList<UserAccount> accounts = accgateway.getAccounts();
-        ArrayList<Recipe> user_recipes = recipegateway.getRecipes();
+        ArrayList<Recipe> user_recipes = (ArrayList<Recipe>) recipegateway.getRecipes();
         for (int i = 0; i < accounts.size(); i++) {
             UserAccount user_account = accounts.get(i);
             if (user_account.getUserid().equals(Userid)) {
