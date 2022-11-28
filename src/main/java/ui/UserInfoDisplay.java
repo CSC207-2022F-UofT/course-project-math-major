@@ -46,13 +46,15 @@ public class UserInfoDisplay extends JFrame {
         JButton height3 = new JButton("Update Height");
         JTextField height4 = new JTextField(10);
         JButton feedback = new JButton("Generate Feedback");
+        JButton editrecipe = new JButton("Edit Recipe");
+        JButton showrank = new JButton("Show Rank");
 
         JPanel passwordPanel = new JPanel();
         JPanel agePanel = new JPanel();
         JPanel genderPanel = new JPanel();
         JPanel weightPanel = new JPanel();
         JPanel heightPanel = new JPanel();
-        JPanel feedbackPanel = new JPanel();
+        JPanel specialPanel = new JPanel();
 
         passwordPanel.add(password1);
         passwordPanel.add(password2);
@@ -74,7 +76,9 @@ public class UserInfoDisplay extends JFrame {
         heightPanel.add(height2);
         heightPanel.add(height4);
         heightPanel.add(height3);
-        feedbackPanel.add(feedback);
+        specialPanel.add(feedback);
+        specialPanel.add(editrecipe);
+        specialPanel.add(showrank);
 
         main.setLayout(new GridLayout(6, 0));
         main.add(passwordPanel);
@@ -82,7 +86,7 @@ public class UserInfoDisplay extends JFrame {
         main.add(genderPanel);
         main.add(weightPanel);
         main.add(heightPanel);
-        main.add(feedbackPanel);
+        main.add(specialPanel);
 
         password3.addActionListener(new ActionListener() {
             @Override
@@ -159,6 +163,13 @@ public class UserInfoDisplay extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, controller.GiveFeedback(account.getHeight(),
                         account.getWeight(), account.getUserid()));
+            }
+        });
+
+        editrecipe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RecipeDisplay rd = new RecipeDisplay();
             }
         });
 
