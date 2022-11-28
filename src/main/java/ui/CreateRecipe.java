@@ -1,14 +1,15 @@
 package ui;
-
+//This is the UI presenter of the Recipe book where it creates a recipe. This UI should show up once the users
+//click on Create button on their recipe book. It takes in values entered by the user and convert send them to the controller
 import controller.RecipeController;
-import entity.Ingredient;
-import entity.Recipe;
-import gateway.RecipeGatewayImplementation;
+
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CreateRecipe {
     final int width = 1100;
@@ -36,8 +37,8 @@ public class CreateRecipe {
         JLabel ingredientIcon = new JLabel("Enter the Ingredients, the amounts, and the unit for amounts");
 
         ingredientIcon.setBounds(100, 40, 400, 100);
-        String column[] = {"Ingredient", "Amount","Units"};
-        String data[][] = {{"","",""},{"","",""},{"","",""}};
+        String[] column = {"Ingredient", "Amount","Units"};
+        String[][] data = {{"","",""},{"","",""},{"","",""},{"","",""},{"","",""},{"","",""},{"","",""},{"","",""}};
         JTable ingre = new JTable(data, column);
         ingre.setRowHeight(20);
         ingre.setBounds(200, 100, width/3 - 50, 600);
@@ -54,41 +55,52 @@ public class CreateRecipe {
 
 
 
-        confirm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RecipeController c = new RecipeController();
-                ArrayList<String> i = new ArrayList<>();
-                ArrayList<String> p = new ArrayList<>();
-                ArrayList<Integer> a = new ArrayList<>();
-                for (int iterate = 0; iterate <ingre.getModel().getRowCount(); iterate++)
+        confirm.addActionListener(e -> {
+            RecipeController c;
+            try {
+                c = new RecipeController();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            ArrayList<String> i = new ArrayList<>();
+            ArrayList<String> p = new ArrayList<>();
+            ArrayList<Integer> a = new ArrayList<>();
+            for (int iterate = 0; iterate <ingre.getModel().getRowCount(); iterate++)
+            {
+
+                i.add((String)(ingre.getModel().getValueAt(iterate, 0)));
+                System.out.println(i);
+
+                String amt = (String)(ingre.getModel().getValueAt(iterate, 1));
+                if (!Objects.equals(amt, ""))
                 {
-
-                    i.add((String)(ingre.getModel().getValueAt(iterate, 0)));
-                    System.out.println(i);
-
-                    String amt = (String)(ingre.getModel().getValueAt(iterate, 1));
-                    if (amt != "")
-                    {
-                        a.add(Integer.parseInt(amt));
-                    }
-
-
-
-                    p.add((String)(ingre.getModel().getValueAt(iterate, 2)));
+                    a.add(Integer.parseInt(amt));
                 }
-                System.out.println(a);
-                if(name.getText() != "")
-                {
+
+                p.add((String)(ingre.getModel().getValueAt(iterate, 2)));
+            }
+            System.out.println(a);
+            if(!Objects.equals(name.getText(), ""))
+            {
+                try {
                     c.createRecipe(name.getText(), i, a, p, s.getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
                     new RecipeDisplay();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
-                else {
-                    //creates a screen that tells you to enter the information again
-                }
-
+                f.setVisible(false);
+            }
+            else {
+                //creates a screen that tells you to enter the information again
+                new RecipeCreationError();
 
             }
+
+
         });
 
 

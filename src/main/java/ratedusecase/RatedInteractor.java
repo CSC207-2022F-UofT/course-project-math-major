@@ -4,6 +4,7 @@ import gateway.*;
 import entity.Recipe;
 import entity.UserAccount;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,9 @@ public class RatedInteractor {
     private final AccountGateway accgateway = new AccountGatewayImplementation();
     private final RecipeGateway recipegateway = new RecipeGatewayImplementation();
     private final RatedGateway ratedgateway = new RatedGatewayImplementation();
+
+    public RatedInteractor() throws FileNotFoundException {
+    }
 
 
     public Map<String, Double> RateUser_AllRecipe (String Userid) throws IOException {
