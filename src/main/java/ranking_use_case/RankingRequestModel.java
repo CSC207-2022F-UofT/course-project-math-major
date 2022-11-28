@@ -7,7 +7,7 @@ public class RankingRequestModel {
 
     private List<Rank> rankList;
 
-    public String getUseId() {return userId;}
+    public String getUserId() {return userId;}
 
     public void setUserId(String userId) {
         this.userId = userId;

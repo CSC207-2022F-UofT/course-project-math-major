@@ -17,7 +17,7 @@ public class InMemoryRankGatewayImpl implements RankGateway {
         boolean load = false;
         try {
             Map<String, List<Rank>> ranklist = this.getRanks();
-            if (ranklist != null && ranklist.isEmpty()) {
+            if (ranklist != null && !ranklist.isEmpty()) {
                 load = true;
             }
         } catch (IOException e) {

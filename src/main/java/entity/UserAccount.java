@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserAccount {
+public class UserAccount implements Serializable {
     private final String userid;
     private String password;
     private int age;

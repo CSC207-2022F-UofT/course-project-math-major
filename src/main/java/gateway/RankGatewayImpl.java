@@ -17,7 +17,7 @@ public class RankGatewayImpl implements RankGateway {
         boolean load = false;
         try {
             Map<String, List<Rank>> rankList = this.getRanks();
-            if (rankList != null && rankList.isEmpty()) {
+            if (rankList != null && !rankList.isEmpty()) {
                 load = true;
             }
         } catch (IOException e) {
@@ -28,16 +28,23 @@ public class RankGatewayImpl implements RankGateway {
         if (load) {
             return;
         }
+
         System.out.println("init file Data:");
         Map<String, List<Rank>> ranks = new HashMap<>();
         List<Rank> rankList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            double rvalue = (double) new Random().nextInt(10000);
-            Rank rank = RankFactory.getInstance().createRank("name" + (i + 1), rvalue);
+            double rvalue = (double) new Random().nextInt(1000);
+            Rank rank = RankFactory.getInstance().createRank("recp" + (i + 1), rvalue);
             rankList.add(rank);
         }
         ranks.put("admin", rankList);
         System.out.println(ranks);
+        try {
+            this.saveRanks(ranks);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

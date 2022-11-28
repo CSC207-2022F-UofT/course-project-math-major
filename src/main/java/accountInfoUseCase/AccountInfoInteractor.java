@@ -1,5 +1,6 @@
 package accountInfoUseCase;
 
+import controller.AccountInfoController;
 import gateway.AccountGateway;
 import gateway.AccountGatewayImplementation;
 import entity.UserAccount;
@@ -7,91 +8,96 @@ import entity.UserAccount;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AccountInfoInteractor implements AccountInfoInputBoundary{
+public class AccountInfoInteractor implements AccountInfoInputBoundary {
 
-    private AccountGateway gateway = new AccountGatewayImplementation();
+    private AccountGateway gateway;
     private ArrayList<UserAccount> accounts;
-    private final String userid;
 
-    public AccountInfoInteractor(String userid) throws IOException {
-        this.userid = userid;
+    public AccountInfoInteractor(AccountGateway gateway) throws IOException {
+        this.gateway = gateway;
         try{
             accounts = gateway.getAccounts();
         } catch (IOException e) {
-            accounts = new ArrayList<>();
+            System.out.println("Sorry, there is no account storage!");
         }
     }
 
+
     @Override
-    public void UpdatePassword(String password) throws IOException {
+    public void UpdatePassword(String password, String userid) throws IOException {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                 account.setPassword(password);
                 gateway.saveAccounts(accounts);
             }
         }
     }
 
+
     @Override
-    public void UpdateAge(int age) throws IOException {
+    public void UpdateAge(int age, String userid) throws IOException {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                 account.setAge(age);
                 gateway.saveAccounts(accounts);
             }
         }
     }
 
+
     @Override
-    public void UpdateGender(char gender) throws IOException {
+    public void UpdateGender(char gender, String userid) throws IOException {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                 account.setGender(gender);
                 gateway.saveAccounts(accounts);
             }
         }
     }
 
+
     @Override
-    public void UpdateWeight(float weight) throws IOException {
+    public void UpdateWeight(float weight, String userid) throws IOException {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                 account.setWeight(weight);
                 gateway.saveAccounts(accounts);
             }
         }
     }
 
+
     @Override
-    public void UpdateHeight(float height) throws IOException {
+    public void UpdateHeight(float height, String userid) throws IOException {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                 account.setWeight(height);
                 gateway.saveAccounts(accounts);
             }
         }
     }
 
+
     @Override
-    public String BMIAndFeedback(float weight, float height) {
+    public String GiveFeedback(float weight, float height, String userid) {
         for (UserAccount account : accounts) {
-            if (account.getUserid().equals(this.userid)) {
+            if (account.getUserid().equals(userid)) {
                float bmi = account.getWeight() / (account.getHeight() * account.getHeight());
                if (bmi < 18.5) {
-                   return "Your current BMI is " + bmi +
-                            ". You are under weight. Please improve your eating habit!";
+                   return "Your current BMI is " + Math.round(bmi) +
+                            "%. You are under weight. Please improve your eating habit!";
                } else if (bmi < 24.9) {
-                   return "Your current BMI is " + bmi +
-                           ". You are in normal weight. GOOD JOB!";
+                   return "Your current BMI is " + Math.round(bmi) +
+                           "%. You are in normal weight. GOOD JOB!";
                } else if (bmi < 29.9) {
-                   return "Your current BMI is " + bmi +
-                           ". You are over weight. Please improve your eating habit!";
+                   return "Your current BMI is " + Math.round(bmi) +
+                           "%. You are over weight. Please improve your eating habit!";
                } else if (bmi < 39.9) {
-                   return "Your current BMI is " + bmi +
-                           ". You are obese. Please change your diet as soon as possible!";
+                   return "Your current BMI is " + Math.round(bmi) +
+                           "%. You are obese. Please change your diet as soon as possible!";
                }  else {
-                   return "Your current BMI is " + bmi +
-                           ". You are extremely obese. Please change your diet as soon as possible!";
+                   return "Your current BMI is " + Math.round(bmi) +
+                           "%. You are extremely obese. Please change your diet as soon as possible!";
                }
             }
         }

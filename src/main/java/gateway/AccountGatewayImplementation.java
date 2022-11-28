@@ -1,10 +1,10 @@
 package gateway;
+
 import entity.UserAccount;
 import java.io.*;
 import java.util.ArrayList;
 
-
-public class AccountGatewayImplementation implements AccountGateway{
+public class AccountGatewayImplementation implements AccountGateway {
 
     @Override
     public void saveAccounts(ArrayList<UserAccount> accounts) throws IOException {
@@ -20,12 +20,12 @@ public class AccountGatewayImplementation implements AccountGateway{
         ObjectInputStream o2 = new ObjectInputStream(f2);
         try {
             ArrayList<UserAccount> accounts = (ArrayList<UserAccount>) o2.readObject();
+            return accounts;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         f2.close();
         return null;
     }
-
 
 }

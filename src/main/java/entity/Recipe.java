@@ -9,16 +9,14 @@ import java.util.Map;
 public class Recipe {
     List<Ingredient> ingredients;
     private String name;
-    private String picture;
     private String steps;
 
     private int calories;
 
     //The entity.Recipe constructor that initiates the entity.Recipe object.
-    public Recipe(String name, String picture, List<Ingredient> ingredients, String steps)
+    public Recipe(String name, List<Ingredient> ingredients, String steps)
     {
         this.name = name;
-        this.picture = picture;
         this.steps = steps;
         this.ingredients = ingredients;
     }
@@ -39,11 +37,6 @@ public class Recipe {
     public String getName()
     {
         return name;
-    }
-
-    public String getPicture()
-    {
-        return picture;
     }
 
     public String getSteps() {
