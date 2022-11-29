@@ -3,12 +3,14 @@ import accountInfoUseCase.AccountInfoInteractor;
 import controller.AccountInfoController;
 import entity.UserAccount;
 import gateway.AccountGateway;
+import gateway.AccountGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UserInfoDisplay extends JFrame {
 
@@ -167,4 +169,12 @@ public class UserInfoDisplay extends JFrame {
         this.pack();
     }
 
+    public static void main(String[] args) throws IOException {
+        UserAccount Asad = new UserAccount("aaa", "abcde", 23, 'M', 70, 1.8f);
+        ArrayList<UserAccount> accounts = new ArrayList<>();
+        AccountGateway gateway = new AccountGatewayImplementation();
+        gateway.saveAccounts(accounts);
+        JFrame ui = new UserInfoDisplay(Asad, gateway);
+        ui.setVisible(true);
+    }
 }
