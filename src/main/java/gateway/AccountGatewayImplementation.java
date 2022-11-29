@@ -32,5 +32,4 @@ public class AccountGatewayImplementation implements AccountGateway {
         f2.close();
         return null;
     }
-
 }

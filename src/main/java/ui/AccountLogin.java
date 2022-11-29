@@ -1,7 +1,14 @@
 package ui;
+import entity.UserAccount;
+import gateway.AccountGateway;
+import gateway.AccountGatewayImplementation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccountLogin  extends JFrame implements ActionListener {
 
@@ -13,7 +20,7 @@ public class AccountLogin  extends JFrame implements ActionListener {
     /**
      * A window with a title and a JButton.
      */
-    public AccountLogin() {
+    public AccountLogin(AccountGateway gateway) {
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -30,7 +37,25 @@ public class AccountLogin  extends JFrame implements ActionListener {
         buttons.add(logIn);
         buttons.add(cancel);
 
-        logIn.addActionListener(this);
+        logIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (String.valueOf(password.getPassword()).equals(
+                            gateway.getAccounts().get(userid.getText()).getPassword())) {
+                        UserInfoDisplay infopage = new UserInfoDisplay(userid.getText(), gateway);
+                        infopage.setVisible(true);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Sorry, your userid or password is incorrect. Please try again!");
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         cancel.addActionListener(this);
 
         JPanel main = new JPanel();
@@ -41,7 +66,6 @@ public class AccountLogin  extends JFrame implements ActionListener {
         main.add(passwordInfo);
         main.add(buttons);
         this.setContentPane(main);
-
         this.pack();
     }
 
@@ -51,4 +75,6 @@ public class AccountLogin  extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
+
 }

@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -186,33 +187,16 @@ public class UserInfoDisplay extends JFrame {
         editrecipe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RecipeInitialDisplay rd = new RecipeInitialDisplay();
+                try {
+                    RecipeInitialDisplay rd = new RecipeInitialDisplay();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         this.add(main);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
-    }
-
-    public int getAge() {
-        return this.age;
-    }
-
-    public static void main(String[] args) throws IOException {
-        UserAccount Asad = new UserAccount("aaa", "abcde", 23, 'M',
-                70, 1.80f);
-        UserAccount Wasd = new UserAccount("bbb", "qwert", 98, 'F',
-                40, 1.62f);
-        Map<String, UserAccount> accounts = new HashMap<>();
-        accounts.put("aaa", Asad);
-        accounts.put("bbb", Wasd);
-        AccountGateway gateway = new AccountGatewayImplementation();
-        gateway.saveAccounts(accounts);
-        AccountInfoInteractor i = new AccountInfoInteractor(gateway);
-        AccountInfoController c = new AccountInfoController(i);
-        c.UpdateAge(20, "aaa");
-        UserInfoDisplay ui = new UserInfoDisplay("aaa", gateway);
-        ui.setVisible(true);
     }
 }

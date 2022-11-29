@@ -79,4 +79,5 @@ public class AccountInfoInteractor implements AccountInfoInputBoundary {
                     "%. You are extremely obese. Please change your diet as soon as possible!";
         }
     }
+
 }
