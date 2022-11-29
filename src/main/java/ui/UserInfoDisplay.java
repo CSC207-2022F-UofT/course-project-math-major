@@ -3,46 +3,58 @@ import accountInfoUseCase.AccountInfoInteractor;
 import controller.AccountInfoController;
 import entity.UserAccount;
 import gateway.AccountGateway;
+import gateway.AccountGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.*;
 
 public class UserInfoDisplay extends JFrame {
 
-    final UserAccount account;
+    final String userid;
     final AccountGateway gateway;
     JPanel main = new JPanel();
+    private String password;
+    private int age;
+    private char gender;
+    private float weight;
+    private float height;
 
-    public UserInfoDisplay(UserAccount account, AccountGateway gateway) throws IOException {
-        this.account = account;
+    public UserInfoDisplay(String userid, AccountGateway gateway) throws IOException {
+        this.userid = userid;
         this.gateway = gateway;
         this.setTitle("User Information Page");
-        this.setSize(1000, 800);
+        this.setSize(1200, 1000);
+        this.password = gateway.getAccounts().get(userid).getPassword();
+        this.age = gateway.getAccounts().get(userid).getAge();
+        this.gender = gateway.getAccounts().get(userid).getGender();
+        this.weight = gateway.getAccounts().get(userid).getWeight();
+        this.height = gateway.getAccounts().get(userid).getHeight();
 
         AccountInfoInteractor interactor = new AccountInfoInteractor(gateway);
         AccountInfoController controller = new AccountInfoController(interactor);
 
         JLabel password1 = new JLabel("Password:");
-        JLabel password2 = new JLabel(this.account.getPassword());
+        JLabel password2 = new JLabel(password);
         JButton password3 = new JButton("Update Password");
         JTextField password4 = new JTextField(10);
         JLabel age1 = new JLabel("Age:");
-        JLabel age2 = new JLabel(String.valueOf(this.account.getAge()));
+        JLabel age2 = new JLabel(String.valueOf(age));
         JButton age3 = new JButton("Update Age");
         JTextField age4 = new JTextField(10);
         JLabel gender1 = new JLabel("Gender:");
-        JLabel gender2 = new JLabel(String.valueOf(this.account.getGender()));
+        JLabel gender2 = new JLabel(String.valueOf(gender));
         JButton gender3 = new JButton("Update Gender");
         JTextField gender4 = new JTextField(10);
         JLabel weight1 = new JLabel("Weight:");
-        JLabel weight2 = new JLabel(String.valueOf(this.account.getWeight()));
+        JLabel weight2 = new JLabel(String.valueOf(weight));
         JButton weight3 = new JButton("Update Weight");
         JTextField weight4 = new JTextField(10);
         JLabel height1 = new JLabel("Height:");
-        JLabel height2 = new JLabel(String.valueOf(this.account.getHeight()));
+        JLabel height2 = new JLabel(String.valueOf(height));
         JButton height3 = new JButton("Update Height");
         JTextField height4 = new JTextField(10);
         JButton feedback = new JButton("Generate Feedback");
@@ -94,7 +106,7 @@ public class UserInfoDisplay extends JFrame {
                 if (!(password4.getText().equals(""))) {
                     String newpassword = password4.getText();
                     try {
-                        controller.UpdatePassword(newpassword, account.getUserid());
+                        controller.UpdatePassword(newpassword, userid);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -108,7 +120,7 @@ public class UserInfoDisplay extends JFrame {
                 if (!(age4.getText().equals(""))) {
                     int newage = Integer.parseInt(age4.getText());
                     try {
-                        controller.UpdateAge(newage, account.getUserid());
+                        controller.UpdateAge(newage, userid);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -122,7 +134,7 @@ public class UserInfoDisplay extends JFrame {
                 if (!(gender4.getText().equals(""))) {
                     char newgender = gender4.getText().charAt(0);
                     try {
-                        controller.UpdateGender(newgender, account.getUserid());
+                        controller.UpdateGender(newgender, userid);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -136,7 +148,7 @@ public class UserInfoDisplay extends JFrame {
                 if (!(weight4.getText().equals(""))) {
                     float newweight = Float.parseFloat(weight4.getText());
                     try {
-                        controller.UpdateWeight(newweight, account.getUserid());
+                        controller.UpdateWeight(newweight, userid);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -150,7 +162,7 @@ public class UserInfoDisplay extends JFrame {
                 if (!(height4.getText().equals(""))) {
                     float newheight = Float.parseFloat(height4.getText());
                     try {
-                        controller.UpdateHeight(newheight, account.getUserid());
+                        controller.UpdateHeight(newheight, userid);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -161,15 +173,20 @@ public class UserInfoDisplay extends JFrame {
         feedback.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, controller.GiveFeedback(account.getHeight(),
-                        account.getWeight(), account.getUserid()));
+                try {
+                    JOptionPane.showMessageDialog(null,
+                            controller.GiveFeedback(gateway.getAccounts().get(userid).getHeight(),
+                                    gateway.getAccounts().get(userid).getWeight(), userid));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         editrecipe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RecipeDisplay rd = new RecipeDisplay();
+                RecipeInitialDisplay rd = new RecipeInitialDisplay();
             }
         });
 
@@ -178,4 +195,24 @@ public class UserInfoDisplay extends JFrame {
         this.pack();
     }
 
+    public int getAge() {
+        return this.age;
+    }
+
+    public static void main(String[] args) throws IOException {
+        UserAccount Asad = new UserAccount("aaa", "abcde", 23, 'M',
+                70, 1.80f);
+        UserAccount Wasd = new UserAccount("bbb", "qwert", 98, 'F',
+                40, 1.62f);
+        Map<String, UserAccount> accounts = new HashMap<>();
+        accounts.put("aaa", Asad);
+        accounts.put("bbb", Wasd);
+        AccountGateway gateway = new AccountGatewayImplementation();
+        gateway.saveAccounts(accounts);
+        AccountInfoInteractor i = new AccountInfoInteractor(gateway);
+        AccountInfoController c = new AccountInfoController(i);
+        c.UpdateAge(20, "aaa");
+        UserInfoDisplay ui = new UserInfoDisplay("aaa", gateway);
+        ui.setVisible(true);
+    }
 }
