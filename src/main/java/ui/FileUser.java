@@ -1,5 +1,4 @@
 package ui;
-
 import account_creation_use_case.AccountDsRequestModel;
 import account_creation_use_case.AccountDsGateway;
 
@@ -8,8 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-public class FileAccount implements AccountDsGateway {
+public class FileUser implements AccountDsGateway {
 
     private final File csvFile;
 
@@ -17,7 +15,7 @@ public class FileAccount implements AccountDsGateway {
 
     private final Map<String, AccountDsRequestModel> accounts = new HashMap<>();
 
-    public FileAccount(String csvPath) throws IOException {
+    public FileUser(String csvPath) throws IOException {
         csvFile = new File(csvPath);
 
         headers.put("username", 0);
@@ -79,13 +77,10 @@ public class FileAccount implements AccountDsGateway {
 
 
 
-    /**
-     * Return whether a user exists with username identifier.
-     * @param identifier the username to check.
-     * @return whether a user exists with username identifier
-     */
     @Override
     public boolean existsByUserid(String identifier) {
         return accounts.containsKey(identifier);
     }
+
+
 }

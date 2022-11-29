@@ -1,38 +1,31 @@
 package ui;
-/*This class is the presenter that visualizes the entity.Recipe. It creates a simple UI that allow users to enter the information
-desired to create a new recipe.
-This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
-load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay */
+
 
 import controller.RecipeController;
 import entity.Ingredient;
 import entity.Recipe;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 
 public class RecipeInitialDisplay {
 
     final int width = 1200;
     final int height = 900;
-
     RecipeController recipeController = new RecipeController();
-
     JList<Recipe> recipeList;
     JLabel iLabel;
     JList<Ingredient> ingredientList;
-
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
-
-    public RecipeInitialDisplay()
-    {
+    /**  This class is the presenter that visualizes the entity.Recipe. It creates a UI for Users to see the information of their Recipes
+     This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
+     load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay **/
+    public RecipeInitialDisplay() throws FileNotFoundException {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
@@ -56,7 +49,7 @@ public class RecipeInitialDisplay {
         panel.add(title, BorderLayout.PAGE_START); // top
 
 
-        /** Creation of a Panel to place on the Left (Recipe List) */
+        /* Creation of a Panel to place on the Left (Recipe List) */
         JPanel recipePanel = new JPanel();
         recipePanel.setPreferredSize(new Dimension(width/3, height/2));
         panel.add(recipePanel, BorderLayout.LINE_START);
@@ -77,20 +70,17 @@ public class RecipeInitialDisplay {
         rsp.setPreferredSize(new Dimension(width/3 - 50, height/2));
         recipePanel.add(rsp);
         // handle selection change event
-        recipeList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                Recipe selectedRecipe = recipeList.getSelectedValue();
-                iLabel.setText("Ingredients for " + selectedRecipe.getName());
-                ingredientsListModel.clear();
-                ingredientsListModel.addAll(selectedRecipe.getIngredients());
-                steps.setText(selectedRecipe.getSteps());
-            }
+        recipeList.addListSelectionListener(e -> {
+            Recipe selectedRecipe = recipeList.getSelectedValue();
+            iLabel.setText("Ingredients for " + selectedRecipe.getName());
+            ingredientsListModel.clear();
+            ingredientsListModel.addAll(selectedRecipe.getIngredients());
+            steps.setText(selectedRecipe.getSteps());
         });
 
 
 
-        /** Creation of a Panel to place in the Center (Ingredient List) */
+        /* Creation of a Panel to place in the Center (Ingredient List) */
         JPanel ingredientPanel = new JPanel();
         ingredientPanel.setPreferredSize(new Dimension(width/3, height/2));
         panel.add(ingredientPanel, BorderLayout.CENTER);
@@ -111,7 +101,7 @@ public class RecipeInitialDisplay {
         ingredientPanel.add(isp);
 
 
-        /** Creation of a Panel to place on the right (Steps) */
+        /* Creation of a Panel to place on the right (Steps) */
         JPanel StepPanel = new JPanel();
         StepPanel.setPreferredSize(new Dimension(width/3, height/2));
         panel.add(StepPanel, BorderLayout.LINE_END);
@@ -128,15 +118,19 @@ public class RecipeInitialDisplay {
         StepPanel.add(steps);
 
 
-        /** Creation of a Panel to place on the bottom (Creation) */
+
+        /* Creation of a Panel to place on the bottom (Creation) */
         JButton createRecipeBtn = new JButton("Create Recipe");
-        panel.add(createRecipeBtn, BorderLayout.PAGE_END);
-        createRecipeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // open new Page :)
-                new CreateRecipe();
-            }
+        panel.add(createRecipeBtn, BorderLayout.BEFORE_FIRST_LINE);
+
+        JButton closeRecipe = new JButton("Close Recipe");
+        panel.add(closeRecipe, BorderLayout.PAGE_END);
+
+        closeRecipe.addActionListener(e -> f.setVisible(false));
+        createRecipeBtn.addActionListener(e -> {
+            // open new Page :)
+            f.setVisible(false);
+            new CreateRecipe();
         });
 
     }
@@ -145,10 +139,11 @@ public class RecipeInitialDisplay {
 
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI. (after everything is loaded)
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        SwingUtilities.invokeLater(() -> {
+            try {
                 new RecipeInitialDisplay();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
         });
     }

@@ -61,9 +61,9 @@ public class AccountRegister extends JPanel implements ActionListener {
         try {
             accountCreationController.create(userid.getText(),
                     String.valueOf(password.getPassword()));
-            JOptionPane.showMessageDialog(this, "%s created.".formatted(userid.getText()));
+            //showMessageDialog(this, "%s created.".formatted(userid.getText()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            showMessageDialog(this, e.getMessage());
         }
     }
 }

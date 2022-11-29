@@ -47,6 +47,11 @@ public class Recipe {
         return calories;
     }
 
+    public void setCalories(int calories)
+    {
+        this.calories = calories;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
