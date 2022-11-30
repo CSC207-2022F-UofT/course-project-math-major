@@ -3,6 +3,7 @@ import account_creation_use_case.AccountInputBoundary;
 import account_creation_use_case.AccountPresenter;
 import account_creation_use_case.AccountDsGateway;
 import account_creation_use_case.AccountInteractor;
+import gateway.AccountGateway;
 import entity.*;
 
 import javax.swing.*;
@@ -27,8 +28,7 @@ public class AccountCreationMain {
         }
         AccountPresenter presenter = new AccountCreationResponseFormatter();
         UserAccount userFactory = new UserAccount(null, null, 0,'m', 0,0);
-        AccountInputBoundary interactor = new AccountInteractor(
-                user, presenter, userFactory);
+        AccountInputBoundary interactor = new AccountInteractor(user, presenter, userFactory);
         AccountCreationController userRegisterController = new AccountCreationController(
                 interactor
         );
@@ -39,9 +39,15 @@ public class AccountCreationMain {
         cardLayout.show(screens, "register");
         application.pack();
         application.setVisible(true);
-
+        WelcomePage welcomepage = new WelcomePage();
+        AccountLogin accountLogin = new AccountLogin();
+        AccountLoggedIn accountLoggedIn = new AccountLoggedIn();
+        screens.add(welcomepage, "register");
+        screens.add(accountLogin, "login");
+        screens.add(accountLoggedIn, "loggedIn");
 
 
     }
+
 
 }
