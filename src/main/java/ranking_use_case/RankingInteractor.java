@@ -35,3 +35,6 @@ public class RankingInteractor implements RankingInputBoundary {
         return rankingResponseModel;
     }
 }
+
+
+
