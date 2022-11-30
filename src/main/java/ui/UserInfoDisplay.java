@@ -16,7 +16,7 @@ import java.util.*;
 public class UserInfoDisplay extends JFrame {
 
     final String userid;
-    final AccountGateway gateway;
+    private AccountGateway gateway;
     JPanel main = new JPanel();
     private String password;
     private int age;
@@ -24,19 +24,22 @@ public class UserInfoDisplay extends JFrame {
     private float weight;
     private float height;
 
+
     public UserInfoDisplay(String userid, AccountGateway gateway) throws IOException {
         this.userid = userid;
         this.gateway = gateway;
+
+        AccountInfoInteractor interactor = new AccountInfoInteractor(gateway);
+        AccountInfoController controller = new AccountInfoController(interactor);
+
         this.setTitle("User Information Page");
-        this.setSize(1200, 1000);
+        this.setPreferredSize(new Dimension(800, 600));
         this.password = gateway.getAccounts().get(userid).getPassword();
         this.age = gateway.getAccounts().get(userid).getAge();
         this.gender = gateway.getAccounts().get(userid).getGender();
         this.weight = gateway.getAccounts().get(userid).getWeight();
         this.height = gateway.getAccounts().get(userid).getHeight();
 
-        AccountInfoInteractor interactor = new AccountInfoInteractor(gateway);
-        AccountInfoController controller = new AccountInfoController(interactor);
 
         JLabel password1 = new JLabel("Password:");
         JLabel password2 = new JLabel(password);
@@ -108,10 +111,12 @@ public class UserInfoDisplay extends JFrame {
                     String newpassword = password4.getText();
                     try {
                         controller.UpdatePassword(newpassword, userid);
+                        password2.setText(newpassword);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
+                password4.setText("");
             }
         });
 
@@ -122,10 +127,12 @@ public class UserInfoDisplay extends JFrame {
                     int newage = Integer.parseInt(age4.getText());
                     try {
                         controller.UpdateAge(newage, userid);
+                        age2.setText(String.valueOf(newage));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
+                age4.setText("");
             }
         });
 
@@ -136,10 +143,12 @@ public class UserInfoDisplay extends JFrame {
                     char newgender = gender4.getText().charAt(0);
                     try {
                         controller.UpdateGender(newgender, userid);
+                        gender2.setText(String.valueOf(newgender));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
+                gender4.setText("");
             }
         });
 
@@ -150,10 +159,12 @@ public class UserInfoDisplay extends JFrame {
                     float newweight = Float.parseFloat(weight4.getText());
                     try {
                         controller.UpdateWeight(newweight, userid);
+                        weight2.setText(String.valueOf(newweight));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
+                weight4.setText("");
             }
         });
 
@@ -164,10 +175,12 @@ public class UserInfoDisplay extends JFrame {
                     float newheight = Float.parseFloat(height4.getText());
                     try {
                         controller.UpdateHeight(newheight, userid);
+                        height2.setText(String.valueOf(newheight));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
+                height4.setText("");
             }
         });
 
@@ -199,4 +212,5 @@ public class UserInfoDisplay extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
     }
+
 }

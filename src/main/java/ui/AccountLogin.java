@@ -16,13 +16,17 @@ public class AccountLogin  extends JFrame implements ActionListener {
 
     JPasswordField password = new JPasswordField(15);
 
-    public AccountLogin() {
+
+    /**
+     * A window with a title and a JButton.
+     */
+    public AccountLogin(AccountGateway gateway) {
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Userid"), userid);
+                new JLabel("User Id"), userid);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), password);
 
@@ -33,7 +37,25 @@ public class AccountLogin  extends JFrame implements ActionListener {
         buttons.add(logIn);
         buttons.add(cancel);
 
-        logIn.addActionListener(this);
+        logIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (String.valueOf(password.getPassword()).equals(
+                            gateway.getAccounts().get(userid.getText()).getPassword())) {
+                        UserInfoDisplay infopage = new UserInfoDisplay(userid.getText(), gateway);
+                        infopage.setVisible(true);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Sorry, your userid or password is incorrect. Please try again!");
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         cancel.addActionListener(this);
 
         JPanel main = new JPanel();
@@ -44,12 +66,24 @@ public class AccountLogin  extends JFrame implements ActionListener {
         main.add(passwordInfo);
         main.add(buttons);
         this.setContentPane(main);
-
         this.pack();
     }
 
+    /**
+     * React to a button click that results in evt.
+     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
-}
 
+    public static void main(String[] args) throws IOException {
+        UserAccount aaa = new UserAccount("aaa", "abcde",
+                21, 'M', 62.3f, 1.78f);
+        Map<String, UserAccount> accounts = new HashMap<>();
+        accounts.put("aaa", aaa);
+        AccountGateway gateway = new AccountGatewayImplementation();
+        gateway.saveAccounts(accounts);
+        JFrame login = new AccountLogin(gateway);
+        login.setVisible(true);
+    }
+}
