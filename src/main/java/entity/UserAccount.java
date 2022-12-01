@@ -1,9 +1,12 @@
 package entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserAccount implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -3801018242841964674L;
     private final String userid;
     private String password;
     private int age;
@@ -12,13 +15,13 @@ public class UserAccount implements Serializable {
     private float height;
     private ArrayList<Recipe> RecipeBook;
 
-    public UserAccount(String userid, String password, int age, char gender, float weight, float height) {
+    public UserAccount(String userid, String password) {
         this.userid = userid;
         this.password = password;
-        this.age = age;
-        this.gender = gender;
-        this.weight = weight;
-        this.height = height;
+        this.age = 0;
+        this.gender = 'M';
+        this.weight = 0.0f;
+        this.height = 0.0f;
     }
 
     public String getUserid() {
@@ -70,7 +73,5 @@ public class UserAccount implements Serializable {
     public void setRecipeBook(ArrayList<Recipe> recipeBook) {
         RecipeBook = recipeBook;
     }
-
-
 
 }

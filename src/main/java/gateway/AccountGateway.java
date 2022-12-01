@@ -10,5 +10,6 @@ public interface AccountGateway {
 
     void saveAccounts(Map<String, UserAccount> accounts) throws IOException;
 
+    boolean addAccount(String userid, String password) throws IOException;
 
 }

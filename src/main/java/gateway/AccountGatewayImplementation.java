@@ -1,6 +1,8 @@
 package gateway;
 
 import entity.UserAccount;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -31,5 +33,16 @@ public class AccountGatewayImplementation implements AccountGateway {
         }
         f2.close();
         return null;
+    }
+
+    @Override
+    public boolean addAccount(String userid, String password) throws IOException {
+        Map<String, UserAccount> accounts = this.getAccounts();
+        if (accounts.containsKey(userid)) {
+            return false;
+        }
+        accounts.put(userid, new UserAccount(userid, password));
+        this.saveAccounts(accounts);
+        return true;
     }
 }

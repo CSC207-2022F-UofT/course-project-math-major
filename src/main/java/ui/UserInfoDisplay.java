@@ -1,9 +1,7 @@
 package ui;
 import accountInfoUseCase.AccountInfoInteractor;
 import controller.AccountInfoController;
-import entity.UserAccount;
 import gateway.AccountGateway;
-import gateway.AccountGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
 
 public class UserInfoDisplay extends JFrame {
 
@@ -64,6 +61,7 @@ public class UserInfoDisplay extends JFrame {
         JButton feedback = new JButton("Generate Feedback");
         JButton editrecipe = new JButton("Edit Recipe");
         JButton showrank = new JButton("Show Rank");
+        JButton exit = new JButton("Exit to Login Page");
 
         JPanel passwordPanel = new JPanel();
         JPanel agePanel = new JPanel();
@@ -95,6 +93,7 @@ public class UserInfoDisplay extends JFrame {
         specialPanel.add(feedback);
         specialPanel.add(editrecipe);
         specialPanel.add(showrank);
+        specialPanel.add(exit);
 
         main.setLayout(new GridLayout(6, 0));
         main.add(passwordPanel);
@@ -205,6 +204,13 @@ public class UserInfoDisplay extends JFrame {
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
 
