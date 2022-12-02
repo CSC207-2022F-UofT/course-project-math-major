@@ -1,6 +1,7 @@
 package presenter;
 
 import ranking_use_case.RankingOutputBoundary;
+import ranking_use_case.RankingRequestModel;
 import ranking_use_case.RankingResponseModel;
 import ui.MainDisplay;
 import ui.RankDisplay;
@@ -23,7 +24,7 @@ public class RankingPresenter implements RankingOutputBoundary {
     }
 
     @Override
-    public void showQueryRank(RankingResponseModel rankingResponseModel) {
-        mainDisplay.display(rankingResponseModel);
+    public void showQueryRank(RankingRequestModel rankingRequestModel) {
+        mainDisplay.display(rankingRequestModel);
     }
 }

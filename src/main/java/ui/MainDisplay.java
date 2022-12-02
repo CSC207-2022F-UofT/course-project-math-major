@@ -16,17 +16,17 @@ import java.util.List;
 public class MainDisplay extends JFrame {
 
 
-    public void display(RankingResponseModel rankingResponseModel) {
+    public void display(RankingRequestModel rankingRequestModel) {
         this.setTitle("RankingSystem");
         this.setSize(1000, 800);
         this.setLayout(null);
 
-        initFrame(rankingResponseModel);
+        initFrame(rankingRequestModel);
 
         this.setVisible(true);
     }
 
-    private void initFrame(RankingResponseModel rankingResponseModel) {
+    private void initFrame(RankingRequestModel rankingRequestModel) {
         Font font = new Font("Microsoft JhengHei", Font.BOLD, 27);
         JLabel titleLabel = new JLabel("Personal Ranking");
         titleLabel.setFont(font);
@@ -39,7 +39,7 @@ public class MainDisplay extends JFrame {
 
         JTextField jTextField = new JTextField();
         jTextField.setBounds(480, 150, 200, 30);
-        jTextField.setText(rankingResponseModel.getUserid());
+        jTextField.setText(rankingRequestModel.getUserId());
         this.add(jTextField);
 
         JButton jButton = new JButton("Rank");
