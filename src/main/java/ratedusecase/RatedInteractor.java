@@ -40,10 +40,10 @@ public class RatedInteractor {
         char gender = user_account.getGender();
         int age = user_account.getAge();
         if (gender == 'm'|| gender == 'M') {
-            ideal_cal_daily = 66.4730 + 13.7516 * weight + 5.0033 * height - 6.7550 * age;
+            ideal_cal_daily = 66.4730 + 13.7516 * weight + 5.0033 * height * 100 - 6.7550 * age;
             ideal_cal = ideal_cal_daily/3;
         } else {
-            ideal_cal_daily = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
+            ideal_cal_daily = 655.0955 + 9.5634 * weight + 1.8496 * height * 100 - 4.6756 * age;
             ideal_cal = ideal_cal_daily/3;
         }
         for (int i = 0; i < user_recipes.size(); i++) {
