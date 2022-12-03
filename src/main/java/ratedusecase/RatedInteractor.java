@@ -14,8 +14,6 @@ import static java.lang.Math.abs;
 
 public class RatedInteractor {
     private double ideal_cal;
-    private double ideal_cal_daily;
-
     private double interval;
     private double temp_score;
     private double total_cal;
@@ -40,11 +38,9 @@ public class RatedInteractor {
         char gender = user_account.getGender();
         int age = user_account.getAge();
         if (gender == 'm'|| gender == 'M') {
-            ideal_cal_daily = 10 * weight + 6.25 * height * 100 - 5 * age + 5;
-            ideal_cal = ideal_cal_daily/3;
+            ideal_cal = 66.4730 + 13.7516 * weight + 5.0033 * height - 6.7550 * age;
         } else {
-            ideal_cal_daily = 10 * weight + 6.25 * height * 100 - 5 * age - 161;
-            ideal_cal = ideal_cal_daily/3;
+            ideal_cal = 655.0955 + 9.5634 * weight + 1.8496 * height - 4.6756 * age;
         }
         for (int i = 0; i < user_recipes.size(); i++) {
             String Recipe_name = user_recipes.get(i).getName();

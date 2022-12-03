@@ -5,26 +5,30 @@ import java.util.ArrayList;
 import entity.Recipe;
 import gateway.RecipeGateway;
 import gateway.RecipeGatewayImplementation;
+import ui.AccountLogin;
+import ui.AccountRegisterUI;
 
 import java.util.List;
 
 public class RecipeController {
 
-    RecipeGateway gateway = new RecipeGatewayImplementation();
+    AccountRegisterUI u = new AccountRegisterUI();
+    RecipeGateway gateway = u.getRGateway();
 
-    public RecipeController() throws FileNotFoundException {
+
+    public RecipeController() throws IOException {
     }
 
-    public List<Recipe> getRecipes() throws IOException {
+    public List<Recipe> getRecipes() {
         return gateway.getRecipes();
     }
     //Interacts with the RecipeGateway interface
     public void createRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit,
-                             String steps, String userid) throws IOException {
-        gateway.addRecipe(name, ingre, amount, unit, steps, userid);
+                             String steps) throws IOException {
+        gateway.addRecipe(name, ingre, amount, unit, steps);
     }
 
-    public List<Recipe> getInitialRecipes(String userid) throws IOException {
-        return gateway.getInitialRecipes(userid);
+    public List<Recipe> getInitialRecipes() throws IOException {
+        return gateway.getInitialRecipes();
     }
 }
