@@ -18,13 +18,14 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     String line = "";
     String splitBy = ",";
     int caloriesCount = 0;
+    String user = "";
     static ArrayList<Recipe> recipes = new ArrayList<>();
 
     public RecipeGatewayImplementation() throws FileNotFoundException {
     }
 
     @Override
-    public ArrayList<Recipe> getRecipes() throws IOException {
+    public ArrayList<Recipe> getRecipes() {
 
         return recipes;
     }
@@ -32,11 +33,10 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     //function for adding a recipe, it takes values giving from controller/use cases and then create an entity
     @Override
 //The function addRecipe is responsible for
-    public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step, String userid) throws IOException {
-        AccountGateway ag = new AccountGatewayImplementation();
-        Map<String, UserAccount> user = ag.getAccounts();
-        UserAccount u = user.get(userid);
-
+    public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step) throws IOException {
+        AccountGateway a = new AccountGatewayImplementation();
+        Map<String, UserAccount> accounts = a.getAccounts();
+        UserAccount ua = accounts.get(user);
         Recipe r = new Recipe(name, 0, step);
         for(int i = 0;i< amount.size(); i++)
         {
@@ -46,26 +46,24 @@ public class RecipeGatewayImplementation implements RecipeGateway {
         }
         r.setCalories(calories(ingre, amount));
         recipes.add(r);
-
-        u.setRecipeBook(recipes);
-        System.out.println(u.getRecipeBook());
+        ua.setRecipeBook(recipes);
+    }
+    @Override
+    public void getUser(String user)
+    {
+        this.user=user;
     }
     //Loads the Initial Recipes stored in the dataset
     @Override
-    public ArrayList<Recipe> getInitialRecipes(String userid) throws IOException {
-        AccountGateway ag = new AccountGatewayImplementation();
-        Map<String, UserAccount> user = ag.getAccounts();
-        UserAccount u = user.get(userid);
-        if (u.getRecipeBook() != null)
-        {
-            recipes = u.getRecipeBook();
-        }
-        System.out.println(u.getRecipeBook());
+    public ArrayList<Recipe> getInitialRecipes() throws IOException {
+        AccountGateway a = new AccountGatewayImplementation();
+        Map<String, UserAccount> accounts = a.getAccounts();
+        UserAccount ua = accounts.get(user);
+        recipes = ua.getRecipeBook();
         return recipes;
     }
     //This method quickly calculates the calories with the calories.csv.
     public int calories(ArrayList<String> i, ArrayList<Integer> a) throws IOException {
-
         while ((line = br.readLine()) != null)
         {
             String[] ing = line.split(splitBy);
@@ -73,6 +71,9 @@ public class RecipeGatewayImplementation implements RecipeGateway {
             {
                 int index = i.indexOf(ing[0]);
                 caloriesCount = Integer.parseInt(ing[2]) * a.get(index);
+            }
+            else {
+                caloriesCount += 1;
             }
 
         }

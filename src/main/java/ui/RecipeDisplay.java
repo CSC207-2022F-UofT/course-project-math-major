@@ -27,7 +27,7 @@ public class RecipeDisplay {
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
 
-    public RecipeDisplay(String userid) throws IOException {
+    public RecipeDisplay() throws IOException {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
@@ -130,9 +130,24 @@ public class RecipeDisplay {
         closeRecipe.addActionListener(e -> f.setVisible(false));
         createRecipeBtn.addActionListener(e -> {
             // open new Page :)
-            new CreateRecipe(userid);
+            new CreateRecipe();
         });
 
+    }
+
+    public static void main(String[] args) {
+
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI. (after everything is loaded)
+        SwingUtilities.invokeLater(() -> {
+            try {
+                new RecipeDisplay();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }

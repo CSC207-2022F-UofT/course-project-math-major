@@ -2,11 +2,14 @@ package ui;
 
 import gateway.AccountGateway;
 import gateway.AccountGatewayImplementation;
+import gateway.RecipeGateway;
+import gateway.RecipeGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,7 +21,9 @@ public class AccountRegisterUI extends JFrame{
     JPasswordField repeatPassword = new JPasswordField(15);
     private final AccountGateway gateway = new AccountGatewayImplementation();
 
-    public AccountRegisterUI() {
+    private final RecipeGateway rgateway = new RecipeGatewayImplementation();
+
+    public AccountRegisterUI() throws FileNotFoundException {
 
         this.setTitle("Register Screen");
 
@@ -78,4 +83,6 @@ public class AccountRegisterUI extends JFrame{
     public AccountGateway getGateway() {
         return gateway;
     }
+
+    public RecipeGateway getRGateway() {return rgateway;}
 }
