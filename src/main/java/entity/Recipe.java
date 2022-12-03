@@ -1,12 +1,15 @@
 package entity;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //This class helps the user with the creation of the recipe. It takes the information from the presenter and then
 //stores them to create a recipe.
-public class Recipe {
+public class Recipe implements Serializable {
+    @Serial
     List<Ingredient> ingredients;
     private String name;
     private String steps;
