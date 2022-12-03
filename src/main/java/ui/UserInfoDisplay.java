@@ -200,8 +200,8 @@ public class UserInfoDisplay extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    RecipeInitialDisplay rd = new RecipeInitialDisplay();
-                } catch (FileNotFoundException ex) {
+                    RecipeInitialDisplay rd = new RecipeInitialDisplay(userid);
+                } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
