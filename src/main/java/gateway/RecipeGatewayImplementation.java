@@ -2,13 +2,15 @@ package gateway;
 
 import entity.Ingredient;
 import entity.Recipe;
-import entity.UserAccount;
-import gateway.AccountGateway;
+//import entity.UserAccount;
 import java.util.ArrayList;
 import java.io.*;
-import java.util.Map;
 
-
+/** This class is the Implementation of the RecipeGateway Interface. It contains functions and
+ * interacts with the Recipe Controller
+ * and entity of Recipe and Ingredients
+ * It contains a calories system which transforms ingredients and their amounts into calories calculated with a large data set.
+ * **/
 public class RecipeGatewayImplementation implements RecipeGateway {
     BufferedReader br = new BufferedReader(new FileReader("calories.csv"));
     String line = "";
@@ -20,7 +22,7 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     }
 
     @Override
-    public ArrayList<Recipe> getRecipes() throws IOException {
+    public ArrayList<Recipe> getRecipes() {
 
         return recipes;
     }
@@ -28,10 +30,7 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     //function for adding a recipe, it takes values giving from controller/use cases and then create an entity
     @Override
 //The function addRecipe is responsible for
-    public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step, String userid) throws IOException {
-        AccountGateway ag = new AccountGatewayImplementation();
-        Map<String, UserAccount> user = ag.getAccounts();
-        UserAccount u = user.get(userid);
+    public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step) throws IOException {
 
         Recipe r = new Recipe(name, 0, step);
         for(int i = 0;i< amount.size(); i++)
@@ -42,27 +41,29 @@ public class RecipeGatewayImplementation implements RecipeGateway {
         }
         r.setCalories(calories(ingre, amount));
         recipes.add(r);
+    }
+    //Loads the Initial Recipes stored in the dataset
+    @Override
+    public ArrayList<Recipe> getInitialRecipes() {
+       //Currently hard coded since data gateway is not implemented yet.
+        String r1_step = "Cook the apple\nPut in the sugar\nfinally poll some water";
+        Recipe r1 = new Recipe("Apple Juice", 512, r1_step);
+        r1.addIngredient(new Ingredient("Apple", 2, "Entire"));
+        r1.addIngredient(new Ingredient("Sugar", 3, "Spoon"));
 
-        u.setRecipeBook(recipes);
-        ag.saveAccounts(user);
-        System.out.println(u.getRecipeBook());
+        Recipe r2 = new Recipe("Banana Bread", 748, "blah blah blah");
+        r2.addIngredient(new Ingredient("Banana", 2, "Entire"));
+        r2.addIngredient(new Ingredient("Sugar", 3, "Spoon"));
+        r2.addIngredient(new Ingredient("Bread", 1, "Piece"));
+
+
+        recipes.add(r2);
+
+        recipes.add(r1);
+        return recipes;
     }
-//Loads the Initial Recipes stored in the dataset
-@Override
-public ArrayList<Recipe> getInitialRecipes(String userid) throws IOException {
-    AccountGateway ag = new AccountGatewayImplementation();
-    Map<String, UserAccount> user = ag.getAccounts();
-    UserAccount u = user.get(userid);
-    if (u.getRecipeBook() != null)
-    {
-        recipes = u.getRecipeBook();
-    }
-    System.out.println(u.getRecipeBook());
-    return recipes;
-}
     //This method quickly calculates the calories with the calories.csv.
     public int calories(ArrayList<String> i, ArrayList<Integer> a) throws IOException {
-
         while ((line = br.readLine()) != null)
         {
             String[] ing = line.split(splitBy);
@@ -70,6 +71,9 @@ public ArrayList<Recipe> getInitialRecipes(String userid) throws IOException {
             {
                 int index = i.indexOf(ing[0]);
                 caloriesCount = Integer.parseInt(ing[2]) * a.get(index);
+            }
+            else {
+                caloriesCount += 1;
             }
 
         }

@@ -1,12 +1,11 @@
 package ranking_use_case;
-
 import entity.Rank;
 
 import java.util.List;
 
 public class RankingResponseModel {
-    String userid;
-    List<Rank> rankList;
+    private String userid;
+    private List<Rank> rankList;
 
     public String getUserid() {
         return userid;
@@ -23,4 +22,5 @@ public class RankingResponseModel {
     public void setRankList(List<Rank> rankList) {
         this.rankList = rankList;
     }
+
 }

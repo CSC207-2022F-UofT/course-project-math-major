@@ -3,6 +3,11 @@ import accountInfoUseCase.AccountInfoInteractor;
 import controller.AccountInfoController;
 import gateway.AccountGateway;
 
+import presenter.RankingPresenter;
+
+import ranking_use_case.RankingRequestModel;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,6 +67,16 @@ public class UserInfoDisplay extends JFrame {
         JButton editrecipe = new JButton("Edit Recipe");
         JButton showrank = new JButton("Show Rank");
         JButton exit = new JButton("Exit to Login Page");
+
+        showrank.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
+                MainDisplay mainDisplay = new MainDisplay();
+                RankingPresenter rankingPresenter = new RankingPresenter(mainDisplay);
+                rankingPresenter.showQueryRank(rankingRequestModel);
+            }
+        });
 
         JPanel passwordPanel = new JPanel();
         JPanel agePanel = new JPanel();
@@ -201,6 +216,8 @@ public class UserInfoDisplay extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     RecipeInitialDisplay rd = new RecipeInitialDisplay(userid);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }

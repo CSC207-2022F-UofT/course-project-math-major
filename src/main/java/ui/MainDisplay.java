@@ -2,9 +2,8 @@ package ui;
 
 import controller.RankingController;
 import entity.Rank;
-import gateway.InMemoryRankGatewayImpl;
-import gateway.RankGateway;
-import gateway.RankGatewayImpl;
+import gateway.RatedGateway;
+import gateway.RatedGatewayImplementation;
 import presenter.RankingPresenter;
 import ranking_use_case.RankingInteractor;
 import ranking_use_case.RankingRequestModel;
@@ -15,26 +14,19 @@ import java.awt.*;
 import java.util.List;
 
 public class MainDisplay extends JFrame {
-    private RankGateway rankGateway = null;
 
-    public static void main(String[] args) {
-        MainDisplay queryDisplay = new MainDisplay();
-        //queryDisplay.initInMemoryData();
-        queryDisplay.initFileData();
-        queryDisplay.display();
-    }
 
-    private void display() {
+    public void display(RankingRequestModel rankingRequestModel) {
         this.setTitle("RankingSystem");
         this.setSize(1000, 800);
         this.setLayout(null);
 
-        initFrame();
+        initFrame(rankingRequestModel);
 
         this.setVisible(true);
     }
 
-    private void initFrame() {
+    private void initFrame(RankingRequestModel rankingRequestModel) {
         Font font = new Font("Microsoft JhengHei", Font.BOLD, 27);
         JLabel titleLabel = new JLabel("Personal Ranking");
         titleLabel.setFont(font);
@@ -47,6 +39,7 @@ public class MainDisplay extends JFrame {
 
         JTextField jTextField = new JTextField();
         jTextField.setBounds(480, 150, 200, 30);
+        jTextField.setText(rankingRequestModel.getUserId());
         this.add(jTextField);
 
         JButton jButton = new JButton("Rank");
@@ -70,7 +63,8 @@ public class MainDisplay extends JFrame {
 
             RankDisplay rankDisplay = new RankDisplay();
             RankingPresenter rankingPresenter = new RankingPresenter(rankDisplay);
-            RankingInteractor rankingInteractor = new RankingInteractor(this.rankGateway, rankingRequestModel, rankingPresenter);
+            RatedGateway ratedGateway = new RatedGatewayImplementation();
+            RankingInteractor rankingInteractor = new RankingInteractor(ratedGateway, rankingRequestModel, rankingPresenter);
 
             RankingController rankingController = new RankingController(rankingInteractor);
             RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
@@ -85,16 +79,6 @@ public class MainDisplay extends JFrame {
             JOptionPane.showMessageDialog(this, "Cannot find user's data");
             e.printStackTrace();
         }
-    }
-
-    private void initFileData() {
-        RankGatewayImpl rankGateway = new RankGatewayImpl();
-        this.rankGateway = rankGateway;
-    }
-
-    public void initMemoryData(){
-        InMemoryRankGatewayImpl inMemoryRankGateway = new InMemoryRankGatewayImpl();
-        this. rankGateway = inMemoryRankGateway;
     }
 
 
