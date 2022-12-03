@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import entity.Recipe;
 import gateway.RecipeGateway;
 import gateway.RecipeGatewayImplementation;
+import ui.AccountLogin;
+import ui.AccountRegisterUI;
 
 import java.util.List;
 /** This is the Controller of the Recipe functions, in controls the data flow between The presenters and the datasets
  *  **/
 public class RecipeController {
 
-    RecipeGateway gateway = new RecipeGatewayImplementation();
+    AccountRegisterUI u = new AccountRegisterUI();
+    RecipeGateway gateway = u.getRGateway();
 
-    public RecipeController() throws FileNotFoundException {
+
+    public RecipeController() throws IOException {
     }
 
     public List<Recipe> getRecipes() {
@@ -25,7 +29,7 @@ public class RecipeController {
         gateway.addRecipe(name, ingre, amount, unit, steps);
     }
 
-    public List<Recipe> getInitialRecipes() {
+    public List<Recipe> getInitialRecipes() throws IOException {
         return gateway.getInitialRecipes();
     }
 }

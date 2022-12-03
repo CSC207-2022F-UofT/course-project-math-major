@@ -1,6 +1,8 @@
 package ui;
 
 import gateway.AccountGateway;
+import gateway.RecipeGateway;
+import gateway.RecipeGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +23,8 @@ public class AccountLogin extends JFrame {
     public AccountLogin() throws IOException {
 
         AccountGateway gateway = registerUI.getGateway();
+
+        RecipeGateway rgateway = registerUI.getRGateway();
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -48,6 +52,7 @@ public class AccountLogin extends JFrame {
                             gateway.getAccounts().get(userid.getText()).getPassword())) {
                         UserInfoDisplay infopage = new UserInfoDisplay(userid.getText(), gateway);
                         infopage.setVisible(true);
+                        rgateway.getUser((userid.getText()));
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "Sorry, your userid or password is incorrect. Please try again!");
