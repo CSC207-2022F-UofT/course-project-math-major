@@ -1,13 +1,15 @@
 package gateway;
 
 import entity.UserAccount;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.*;
 
 public interface AccountGateway {
 
-    ArrayList<UserAccount> getAccounts() throws IOException;
+    Map<String, UserAccount> getAccounts() throws IOException;
 
-    void saveAccounts(ArrayList<UserAccount> accounts) throws IOException;
+    void saveAccounts(Map<String, UserAccount> accounts) throws IOException;
+
+    boolean addAccount(String userid, String password) throws IOException;
 
 }

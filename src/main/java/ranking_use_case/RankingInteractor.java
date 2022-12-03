@@ -2,7 +2,7 @@ package ranking_use_case;
 
 import entity.Rank;
 import entity.RankComparator;
-import gateway.RankGateway;
+import gateway.RatedGateway;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,11 +12,11 @@ public class RankingInteractor implements RankingInputBoundary {
 
     private final RankingOutputBoundary rankingOutputBoundary;
 
-    private RankGateway rankGateway;
+    private RatedGateway ratedGateway;
 
 
-    public RankingInteractor(RankGateway rankGateway, RankingRequestModel rankingRequestModel, RankingOutputBoundary rankingOutputBoundary) {
-        this.rankGateway = rankGateway;
+    public RankingInteractor(RatedGateway ratedGateway, RankingRequestModel rankingRequestModel, RankingOutputBoundary rankingOutputBoundary) {
+        this.ratedGateway = ratedGateway;
         this.rankingRequestModel = rankingRequestModel;
         this.rankingOutputBoundary = rankingOutputBoundary;
     }
@@ -24,7 +24,7 @@ public class RankingInteractor implements RankingInputBoundary {
     @Override
     public RankingResponseModel rank(RankingRequestModel requestModel) {
         String userId = requestModel.getUserId();
-        List<Rank> rankList = rankGateway.getRank(userId);
+        List<Rank> rankList = ratedGateway.getRank(userId);
         //sort data
         if(rankList != null && !rankList.isEmpty()) {
             Collections.sort(rankList, new RankComparator());
@@ -35,3 +35,6 @@ public class RankingInteractor implements RankingInputBoundary {
         return rankingResponseModel;
     }
 }
+
+
+

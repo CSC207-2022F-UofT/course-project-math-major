@@ -1,7 +1,7 @@
 package entity;
 
 public class RankFactory {
-    private static RankFactory rankFactory = new RankFactory();
+    private static final RankFactory rankFactory = new RankFactory();
 
     private RankFactory(){}
 

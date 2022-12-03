@@ -1,6 +1,9 @@
 package gateway;
 
+import entity.Rank;
+
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public interface RatedGateway {
@@ -8,5 +11,7 @@ public interface RatedGateway {
     Map<String, Map<String, Double>> getRatedRecipes() throws IOException;
 
     void saveRatedRecipes(Map<String, Map<String, Double>> rated_recipes) throws IOException;
+
+    List<Rank> getRank(String userId);
 
 }

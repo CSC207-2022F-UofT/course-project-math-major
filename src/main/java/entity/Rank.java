@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 
+// Here we use a design pattern Serializable, so Rank can iterate
 public class Rank implements Serializable {
     private String name;
     private double value;

@@ -1,25 +1,32 @@
 package gateway;
 
 import entity.UserAccount;
+
+import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class AccountGatewayImplementation implements AccountGateway {
 
     @Override
-    public void saveAccounts(ArrayList<UserAccount> accounts) throws IOException {
+    public void saveAccounts(Map<String, UserAccount> accounts) throws IOException {
         FileOutputStream f1  = new FileOutputStream("Accounts.csv");
         ObjectOutputStream o1 = new ObjectOutputStream(f1);
-        o1.writeObject(accounts);
+        ArrayList<UserAccount> a = new ArrayList<>(accounts.values());
+        o1.writeObject(a);
         f1.close();
     }
 
     @Override
-    public ArrayList<UserAccount> getAccounts() throws IOException {
+    public Map<String, UserAccount> getAccounts() throws IOException {
         FileInputStream f2  = new FileInputStream("Accounts.csv");
         ObjectInputStream o2 = new ObjectInputStream(f2);
+        Map<String, UserAccount> accounts = new HashMap<>();
         try {
-            ArrayList<UserAccount> accounts = (ArrayList<UserAccount>) o2.readObject();
+            ArrayList<UserAccount> a = (ArrayList<UserAccount>) o2.readObject();
+            for (UserAccount account : a) {
+                accounts.put(account.getUserid(), account);
+            }
             return accounts;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -28,4 +35,14 @@ public class AccountGatewayImplementation implements AccountGateway {
         return null;
     }
 
+    @Override
+    public boolean addAccount(String userid, String password) throws IOException {
+        Map<String, UserAccount> accounts = this.getAccounts();
+        if (accounts.containsKey(userid)) {
+            return false;
+        }
+        accounts.put(userid, new UserAccount(userid, password));
+        this.saveAccounts(accounts);
+        return true;
+    }
 }
