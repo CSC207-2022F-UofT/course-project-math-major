@@ -16,16 +16,16 @@ public class RecipeController {
     public RecipeController() throws FileNotFoundException {
     }
 
-    public List<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() throws IOException {
         return gateway.getRecipes();
     }
     //Interacts with the RecipeGateway interface
     public void createRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit,
-                             String steps) throws IOException {
-        gateway.addRecipe(name, ingre, amount, unit, steps);
+                             String steps, String userid) throws IOException {
+        gateway.addRecipe(name, ingre, amount, unit, steps, userid);
     }
 
-    public List<Recipe> getInitialRecipes() {
-        return gateway.getInitialRecipes();
+    public List<Recipe> getInitialRecipes(String userid) throws IOException {
+        return gateway.getInitialRecipes(userid);
     }
 }

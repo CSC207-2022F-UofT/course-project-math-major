@@ -7,6 +7,7 @@ import entity.Recipe;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,7 +27,7 @@ public class RecipeDisplay {
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
 
-    public RecipeDisplay() throws FileNotFoundException {
+    public RecipeDisplay(String userid) throws IOException {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
@@ -129,22 +130,9 @@ public class RecipeDisplay {
         closeRecipe.addActionListener(e -> f.setVisible(false));
         createRecipeBtn.addActionListener(e -> {
             // open new Page :)
-            new CreateRecipe();
+            new CreateRecipe(userid);
         });
 
-    }
-
-    public static void main(String[] args) {
-
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI. (after everything is loaded)
-        SwingUtilities.invokeLater(() -> {
-            try {
-                new RecipeDisplay();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
 }
