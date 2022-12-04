@@ -14,8 +14,8 @@ import static java.lang.Math.abs;
 
 public class RatedInteractor {
     private double ideal_cal;
-
     private double ideal_cal_daily;
+
     private double interval;
     private double temp_score;
     private double total_cal;
