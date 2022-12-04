@@ -61,6 +61,8 @@ public class CreateRecipe {
                 c = new RecipeController();
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
             ArrayList<String> i = new ArrayList<>();
             ArrayList<String> p = new ArrayList<>();
@@ -89,7 +91,7 @@ public class CreateRecipe {
                 }
                 try {
                     new RecipeDisplay();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 f.setVisible(false);

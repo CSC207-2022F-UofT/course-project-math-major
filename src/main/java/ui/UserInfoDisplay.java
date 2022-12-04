@@ -1,12 +1,14 @@
 package ui;
 import accountInfoUseCase.AccountInfoInteractor;
 import controller.AccountInfoController;
+import controller.RankingController;
 import gateway.AccountGateway;
-
+import gateway.RatedGateway;
+import gateway.RatedGatewayImplementation;
 import presenter.RankingPresenter;
-
+import ranking_use_case.RankingInteractor;
 import ranking_use_case.RankingRequestModel;
-
+import ranking_use_case.RankingResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,9 +74,16 @@ public class UserInfoDisplay extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
+
+                RatedGateway ratedGateway = new RatedGatewayImplementation();
                 MainDisplay mainDisplay = new MainDisplay();
                 RankingPresenter rankingPresenter = new RankingPresenter(mainDisplay);
-                rankingPresenter.showQueryRank(rankingRequestModel);
+                RankingInteractor rankingInteractor = new RankingInteractor(ratedGateway, rankingRequestModel, rankingPresenter);
+
+                RankingController rankingController = new RankingController(rankingInteractor);
+                RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
+
+                rankingPresenter.showQueryRank(rankingResponseModel);
             }
         });
 
@@ -216,7 +225,7 @@ public class UserInfoDisplay extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     RecipeInitialDisplay rd = new RecipeInitialDisplay();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }

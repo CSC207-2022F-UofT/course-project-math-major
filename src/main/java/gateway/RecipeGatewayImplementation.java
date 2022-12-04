@@ -2,9 +2,11 @@ package gateway;
 
 import entity.Ingredient;
 import entity.Recipe;
-//import entity.UserAccount;
+import entity.UserAccount;
+import gateway.AccountGateway;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Map;
 
 /** This class is the Implementation of the RecipeGateway Interface. It contains functions and
  * interacts with the Recipe Controller
@@ -16,6 +18,7 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     String line = "";
     String splitBy = ",";
     int caloriesCount = 0;
+    String user = "";
     static ArrayList<Recipe> recipes = new ArrayList<>();
 
     public RecipeGatewayImplementation() throws FileNotFoundException {
@@ -31,7 +34,9 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     @Override
 //The function addRecipe is responsible for
     public void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step) throws IOException {
-
+        AccountGateway a = new AccountGatewayImplementation();
+        Map<String, UserAccount> accounts = a.getAccounts();
+        UserAccount ua = accounts.get(user);
         Recipe r = new Recipe(name, 0, step);
         for(int i = 0;i< amount.size(); i++)
         {
@@ -41,25 +46,20 @@ public class RecipeGatewayImplementation implements RecipeGateway {
         }
         r.setCalories(calories(ingre, amount));
         recipes.add(r);
+        ua.setRecipeBook(recipes);
+    }
+    @Override
+    public void getUser(String user)
+    {
+        this.user=user;
     }
     //Loads the Initial Recipes stored in the dataset
     @Override
-    public ArrayList<Recipe> getInitialRecipes() {
-       //Currently hard coded since data gateway is not implemented yet.
-        String r1_step = "Cook the apple\nPut in the sugar\nfinally poll some water";
-        Recipe r1 = new Recipe("Apple Juice", 512, r1_step);
-        r1.addIngredient(new Ingredient("Apple", 2, "Entire"));
-        r1.addIngredient(new Ingredient("Sugar", 3, "Spoon"));
-
-        Recipe r2 = new Recipe("Banana Bread", 748, "blah blah blah");
-        r2.addIngredient(new Ingredient("Banana", 2, "Entire"));
-        r2.addIngredient(new Ingredient("Sugar", 3, "Spoon"));
-        r2.addIngredient(new Ingredient("Bread", 1, "Piece"));
-
-
-        recipes.add(r2);
-
-        recipes.add(r1);
+    public ArrayList<Recipe> getInitialRecipes() throws IOException {
+        AccountGateway a = new AccountGatewayImplementation();
+        Map<String, UserAccount> accounts = a.getAccounts();
+        UserAccount ua = accounts.get(user);
+        recipes = ua.getRecipeBook();
         return recipes;
     }
     //This method quickly calculates the calories with the calories.csv.
