@@ -9,16 +9,12 @@ import java.util.List;
 
 public interface RecipeGateway {
 
-    public List<Recipe> getRecipes();
-
-    void getUser(String user);
+    public List<Recipe> getRecipes() throws IOException;
 
 
 
-    void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step) throws IOException;
+    void addRecipe(String name, ArrayList<String> ingre, ArrayList<Integer> amount, ArrayList<String> unit, String step, String userid) throws IOException;
 
-    public List<Recipe> getInitialRecipes() throws IOException;
-
-    //Loads the Initial Recipes stored in the dataset
+    public List<Recipe> getInitialRecipes(String userid) throws IOException;
 
 }

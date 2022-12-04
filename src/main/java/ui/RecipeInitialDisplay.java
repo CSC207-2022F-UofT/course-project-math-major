@@ -26,7 +26,7 @@ public class RecipeInitialDisplay {
     /**  This class is the presenter that visualizes the entity.Recipe. It creates a UI for Users to see the information of their Recipes
      This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
      load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay **/
-    public RecipeInitialDisplay() throws IOException {
+    public RecipeInitialDisplay(String userid) throws IOException {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
@@ -62,7 +62,7 @@ public class RecipeInitialDisplay {
         recipePanel.add(rLabel);
 
         // Recipe JList
-        List<Recipe> recipes = recipeController.getInitialRecipes();
+        List<Recipe> recipes = recipeController.getInitialRecipes(userid);
         recipeList = new JList(recipes.toArray());
         recipeList.setFixedCellHeight(30);
 
@@ -131,22 +131,9 @@ public class RecipeInitialDisplay {
         createRecipeBtn.addActionListener(e -> {
             // open new Page :)
             f.setVisible(false);
-            new CreateRecipe();
+            new CreateRecipe(userid);
         });
 
     }
 
-    public static void main(String[] args) {
-
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI. (after everything is loaded)
-        SwingUtilities.invokeLater(() -> {
-            try {
-                new RecipeInitialDisplay();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
-
-}

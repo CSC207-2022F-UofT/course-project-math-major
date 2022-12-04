@@ -3,6 +3,8 @@ package gateway;
 import entity.Rank;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +19,23 @@ public class RatedGatewayImplementation implements RatedGateway {
 
     @Override
     public List<Rank> getRank(String userId) {
-        return null;
+        List<Rank> ranklist = new ArrayList<>();
+        try {
+            Map<String, Map<String, Double>> recipes = getRatedRecipes();
+            if(recipes == null){
+                return Collections.emptyList();
+            }
+            Map<String, Double> rankMap = recipes.get(userId);
+            if (rankMap != null){
+                for (String key:rankMap.keySet()){
+                    Rank rank = new Rank(key, rankMap.get(key));
+                    ranklist.add(rank);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ranklist;
     }
 
     public Map<String, Map<String, Double>> getRatedRecipes() throws IOException {

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class CreateRecipe {
     final int width = 1100;
     final int height = 800;
-    public CreateRecipe() {
+    public CreateRecipe(String userid) {
         JFrame f = new JFrame();
         f.setSize(width, height);
         f.setVisible(true);
@@ -57,8 +57,6 @@ public class CreateRecipe {
                 c = new RecipeController();
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
             }
             ArrayList<String> i = new ArrayList<>();
             ArrayList<String> p = new ArrayList<>();
@@ -81,12 +79,14 @@ public class CreateRecipe {
             if(!Objects.equals(name.getText(), ""))
             {
                 try {
-                    c.createRecipe(name.getText(), i, a, p, s.getText());
+                    c.createRecipe(name.getText(), i, a, p, s.getText(), userid);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
-                    new RecipeDisplay();
+                    new RecipeDisplay(userid);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
