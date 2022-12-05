@@ -14,7 +14,7 @@ Giving feedback based on the healthiness of the Recipe and ranking them based on
 
 ## Project Requirements
 - SDK: Amazon Correto version 18.0.2
-- Language Level: above 14
+- Language Level: SDK default(18)
 
 ## How to use the Recipe Application!
 **1. Running the Program and Login
