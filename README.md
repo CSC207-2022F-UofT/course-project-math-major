@@ -41,13 +41,20 @@ The Recipe Book shows you all the Recipe that you had created in the past, if th
 
 **4. Recipe Creation**
 
-Once you had clicked on the Create Recipe button, you will be sent to the Recipe Creation UI.
+Once you had clicked on the Create Recipe button, you will be sent to the Recipe Creation/Deletion UI.
 
-<img width="1098" alt="Screenshot 2022-12-04 at 12 02 50 AM" src="https://user-images.githubusercontent.com/93350299/205475940-de082e56-ba1c-4e63-8d56-ad1b60a02a54.png">
+<img width="1098" alt="Screenshot 2022-12-04 at 7 44 20 PM" src="https://user-images.githubusercontent.com/93350299/205526496-48a0f6f8-ec5b-4540-8ceb-2863a5386df7.png">
 
-On this page you could enter a Recipe Name, and their ingredients as well as the steps making it. The application will then calculate the calories for your recipe and create it in the Recipe Book
+On this page you could enter a Recipe Name, and their ingredients as well as the steps making it. The application will then calculate the calories for your recipe and create it in the Recipe Book. Once you had entered the desired information, click on 
 
-**5. Rating and Ranking**
+
+**5 Recipe Deletion**
+If you want to delete a Recipe, go to the Delete Recipe button on the left bottom of the RecipeCreation UI. Once clicked, it prompt you to another UI. You could enter the name of the Recipe you want to delete and it will delete for you.
+
+<img width="697" alt="Screenshot 2022-12-04 at 7 47 25 PM" src="https://user-images.githubusercontent.com/93350299/205526651-60b7e79d-704a-480f-b4df-aa9600ad3b98.png">
+
+
+**6. Rating and Ranking**
 
 After creating your recipes, you could go back to the User Information Page and check out the ranking function by clicking on Show Rank
 <img width="994" alt="Screenshot 2022-12-04 at 12 03 49 AM" src="https://user-images.githubusercontent.com/93350299/205476025-7219052c-fc4d-4492-930c-e30760797710.png">
