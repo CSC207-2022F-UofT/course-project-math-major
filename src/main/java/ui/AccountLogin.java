@@ -2,7 +2,6 @@ package ui;
 
 import gateway.AccountGateway;
 import gateway.RecipeGateway;
-import gateway.RecipeGatewayImplementation;
 
 import javax.swing.*;
 import java.awt.*;
