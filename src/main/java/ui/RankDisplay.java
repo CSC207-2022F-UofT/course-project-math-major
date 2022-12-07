@@ -5,7 +5,9 @@ import ranking_use_case.RankingResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * This class will initialize the user interface which is to show the user's rank
+ */
 public class RankDisplay extends JFrame {
     public RankDisplay() {
         this.setTitle("rank");
@@ -14,6 +16,12 @@ public class RankDisplay extends JFrame {
         // initFrame();
     }
 
+    /**
+     * This method will add the user's recipes in the sorted ranklist
+     * (i.e., the list of recipes sorted by score) of the user ranklist one by one to create a ranking effect
+     * @param rankingResponseModel A model dedicated to storing user data,
+     *                             including the userid and ranklist (rated recipes that are sorted)
+     */
     public void showFrame(RankingResponseModel rankingResponseModel) {
         Font font = new Font("Microsoft JhengHei", Font.BOLD, 27);
         JLabel titleLabel = new JLabel("Personal Ranking");

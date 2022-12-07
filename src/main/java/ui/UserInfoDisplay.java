@@ -70,7 +70,7 @@ public class UserInfoDisplay extends JFrame {
 
 
         /**
-         * This is a user-triggered method that will show the ranking of users with that userid
+         * This is a user-triggered method that will show the rank of users with that userid
          */
         showrank.addActionListener(new ActionListener() {
             @Override
