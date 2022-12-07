@@ -1,16 +1,16 @@
 package entity;
 
-import java.io.Serializable;
-
-
+/**
+ * The Rank class represents a rated recipe of a user
+ * which has a recipe name and a score for the recipe
+ * This class has getter and setter method for the name and the rate
+ */
 public class Rank{
     private String name;
     private double value;
 
     /**
-     * The Rank class represents a rated recipe of a user
-     * which has a name and a score
-     * This class has getter and setter method for the name and the rate
+     * This method generates an instance of the scored recipe
      * @param name The name of the recipe of the user
      * @param value The score of the recipe of the user
      */

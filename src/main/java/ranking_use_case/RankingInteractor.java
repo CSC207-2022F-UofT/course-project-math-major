@@ -21,6 +21,13 @@ public class RankingInteractor implements RankingInputBoundary {
         this.rankingOutputBoundary = rankingOutputBoundary;
     }
 
+    /**
+     * This method Accepts requests from users and accepts a requestmodel for changes in the entity,
+     * then stores it to the gateway and generates a responsemodel of the changed data
+     * and returns it
+     * @param requestModel Packaging of a user input data
+     * @return Packaging of a user output data
+     */
     @Override
     public RankingResponseModel rank(RankingRequestModel requestModel) {
         String userId = requestModel.getUserId();

@@ -18,6 +18,29 @@ public class RatedGatewayImplementation implements RatedGateway {
         f1.close();
     }
 
+
+    @Override
+    public Map<String, Map<String, Double>> getRatedRecipes() throws IOException {
+        FileInputStream f2 = new FileInputStream("RatedRecipe.csv");
+        ObjectInputStream o2 = new ObjectInputStream(f2);
+        try {
+            Map<String, Map<String, Double>> rated_recipes = (Map<String, Map<String, Double>>) o2.readObject();
+            return rated_recipes;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        f2.close();
+        return null;
+    }
+
+    /**
+     * This method receives a userId read all
+     * It will retrieve the data from RatedRecipe.csv
+     * And will add them to the ranklist
+     * Finally return the ranklist corresponding to the user in the database
+     * @param userId The user's personal identity
+     * @return The user's rated recipes in the form of List<Rank>
+     */
     @Override
     public List<Rank> getRank(String userId) {
         List<Rank> ranklist = new ArrayList<>();
@@ -37,20 +60,6 @@ public class RatedGatewayImplementation implements RatedGateway {
             e.printStackTrace();
         }
         return ranklist;
-    }
-
-    @Override
-    public Map<String, Map<String, Double>> getRatedRecipes() throws IOException {
-        FileInputStream f2 = new FileInputStream("RatedRecipe.csv");
-        ObjectInputStream o2 = new ObjectInputStream(f2);
-        try {
-            Map<String, Map<String, Double>> rated_recipes = (Map<String, Map<String, Double>>) o2.readObject();
-            return rated_recipes;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        f2.close();
-        return null;
     }
 
 

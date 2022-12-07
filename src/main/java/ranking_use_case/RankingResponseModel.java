@@ -3,6 +3,9 @@ import entity.Rank;
 
 import java.util.List;
 
+/**
+ * This class is a packaging of a user output data
+ */
 public class RankingResponseModel {
     private String userid;
     private List<Rank> rankList;
