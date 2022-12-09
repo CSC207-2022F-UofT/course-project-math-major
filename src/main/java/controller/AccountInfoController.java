@@ -5,7 +5,7 @@ import accountInfoUseCase.AccountInfoInputBoundary;
 import java.io.IOException;
 
 /** This is the Controller of the AccountInfo System, in order to receive and call the input boundary to follow
- * commands the user made in the UserInfoDisplay UI.**/
+ * commands the user made in the UserInfoDisplay UI. **/
 
 public class AccountInfoController {
 

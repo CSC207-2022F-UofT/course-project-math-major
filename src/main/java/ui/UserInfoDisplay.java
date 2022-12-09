@@ -15,7 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-/**This is the User Interface of the Account Information System. Users can view and update their personal
+/** This is the User Interface of the Account Information System. Users can view and update their personal
  * information here and see the feedback. They can also go to other systems like rank system and recipe system
  * from here. **/
 
