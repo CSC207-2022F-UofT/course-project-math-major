@@ -2,9 +2,11 @@ package gateway;
 
 import entity.UserAccount;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.*;
+
+/**This class implements the methods in AccountGateway, which serve for take all the UserAccounts from the gateway
+ *as needed and store thm back. **/
 
 public class AccountGatewayImplementation implements AccountGateway {
 

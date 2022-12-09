@@ -4,6 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**This class represents the account of users. It contains values such as Strings userid, password, Integer age,
+ *Char gender, and float weight and height. **/
+
 public class UserAccount implements Serializable {
     @Serial
     private static final long serialVersionUID = -3801018242841964674L;
