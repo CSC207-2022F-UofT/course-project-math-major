@@ -1,5 +1,6 @@
 package Searching_use_case;
 import entity.Recipe;
+import gateway.SearchingGateway;
 
 import java.util.ArrayList;
 import java.util.HashMap;
