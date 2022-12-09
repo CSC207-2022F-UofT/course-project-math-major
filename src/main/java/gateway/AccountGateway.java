@@ -4,6 +4,8 @@ import entity.UserAccount;
 import java.util.*;
 import java.io.*;
 
+/** This is the gateway to store all the UserAccounts and their information. **/
+
 public interface AccountGateway {
 
     Map<String, UserAccount> getAccounts() throws IOException;

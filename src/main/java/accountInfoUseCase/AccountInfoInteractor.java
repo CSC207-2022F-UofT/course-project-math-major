@@ -1,19 +1,20 @@
 package accountInfoUseCase;
 
-import controller.AccountInfoController;
 import gateway.AccountGateway;
-import gateway.AccountGatewayImplementation;
 import entity.UserAccount;
 
 import java.io.IOException;
 import java.util.*;
+
+/** This is the Interactor of the AccountInfoSystem, which implements the methods in controller and input boundary,
+ * so that all processes of updating user information and generating feedback are done here. **/
 
 public class AccountInfoInteractor implements AccountInfoInputBoundary {
 
     private final AccountGateway gateway;
     private Map<String, UserAccount> accounts;
 
-    public AccountInfoInteractor(AccountGateway gateway) throws IOException {
+    public AccountInfoInteractor(AccountGateway gateway) {
         this.gateway = gateway;
         try{
             accounts = gateway.getAccounts();

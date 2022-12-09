@@ -2,6 +2,9 @@ package accountInfoUseCase;
 
 import java.io.IOException;
 
+/** This is the input boundary of the AccountInfo System, which receives the command passes by the controller and
+ * let the interactor complete the order. **/
+
 public interface AccountInfoInputBoundary {
 
     void UpdatePassword(String password, String userid) throws IOException;

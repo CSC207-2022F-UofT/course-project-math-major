@@ -6,43 +6,40 @@ import gateway.AccountGateway;
 import gateway.RatedGateway;
 import gateway.RatedGatewayImplementation;
 import presenter.RankingPresenter;
-import ranking_use_case.RankingInteractor;
-import ranking_use_case.RankingRequestModel;
-import ranking_use_case.RankingResponseModel;
+import ranking_use_case.*;
 import recipeui.RecipeInitialDisplay;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.Serial;
+
+/** This is the User Interface of the Account Information System. Users can view and update their personal
+ * information here and see the feedback. They can also go to other systems like rank system and recipe system
+ * from here. **/
 
 public class UserInfoDisplay extends JFrame {
 
+    @Serial
+    private static final long serialVersionUID = 6387370993293702225L;
     final String userid;
-    private AccountGateway gateway;
     JPanel main = new JPanel();
-    private String password;
-    private int age;
-    private char gender;
-    private float weight;
-    private float height;
 
 
     public UserInfoDisplay(String userid, AccountGateway gateway) throws IOException {
         this.userid = userid;
-        this.gateway = gateway;
 
         AccountInfoInteractor interactor = new AccountInfoInteractor(gateway);
         AccountInfoController controller = new AccountInfoController(interactor);
 
         this.setTitle("User Information Page");
         this.setPreferredSize(new Dimension(800, 600));
-        this.password = gateway.getAccounts().get(userid).getPassword();
-        this.age = gateway.getAccounts().get(userid).getAge();
-        this.gender = gateway.getAccounts().get(userid).getGender();
-        this.weight = gateway.getAccounts().get(userid).getWeight();
-        this.height = gateway.getAccounts().get(userid).getHeight();
+
+        String password = gateway.getAccounts().get(userid).getPassword();
+        int age = gateway.getAccounts().get(userid).getAge();
+        char gender = gateway.getAccounts().get(userid).getGender();
+        float weight = gateway.getAccounts().get(userid).getWeight();
+        float height = gateway.getAccounts().get(userid).getHeight();
 
 
         JLabel password1 = new JLabel("Password:");
@@ -70,21 +67,21 @@ public class UserInfoDisplay extends JFrame {
         JButton showrank = new JButton("Show Rank");
         JButton exit = new JButton("Exit to Login Page");
 
-        showrank.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
+        /**
+         * This is a user-triggered method that will show the rank of users with that userid
+         */
+        showrank.addActionListener(e -> {
+            RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
 
-                RatedGateway ratedGateway = new RatedGatewayImplementation();
-                MainDisplay mainDisplay = new MainDisplay();
-                RankingPresenter rankingPresenter = new RankingPresenter(mainDisplay);
-                RankingInteractor rankingInteractor = new RankingInteractor(ratedGateway, rankingRequestModel, rankingPresenter);
+            RatedGateway ratedGateway = new RatedGatewayImplementation();
+            MainDisplay mainDisplay = new MainDisplay();
+            RankingOutputBoundary rankingOutputBoundary = new RankingPresenter(mainDisplay);
+            RankingInputBoundary rankingInputBoundary = new RankingInteractor(ratedGateway, rankingRequestModel, rankingOutputBoundary);
 
-                RankingController rankingController = new RankingController(rankingInteractor);
-                RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
+            RankingController rankingController = new RankingController(rankingInputBoundary);
+            RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
 
-                rankingPresenter.showQueryRank(rankingResponseModel);
-            }
+            rankingOutputBoundary.showQueryRank(rankingResponseModel);
         });
 
         JPanel passwordPanel = new JPanel();
@@ -127,116 +124,90 @@ public class UserInfoDisplay extends JFrame {
         main.add(heightPanel);
         main.add(specialPanel);
 
-        password3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!(password4.getText().equals(""))) {
-                    String newpassword = password4.getText();
-                    try {
-                        controller.UpdatePassword(newpassword, userid);
-                        password2.setText(newpassword);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                password4.setText("");
-            }
-        });
-
-        age3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!(age4.getText().equals(""))) {
-                    int newage = Integer.parseInt(age4.getText());
-                    try {
-                        controller.UpdateAge(newage, userid);
-                        age2.setText(String.valueOf(newage));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                age4.setText("");
-            }
-        });
-
-        gender3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!(gender4.getText().equals(""))) {
-                    char newgender = gender4.getText().charAt(0);
-                    try {
-                        controller.UpdateGender(newgender, userid);
-                        gender2.setText(String.valueOf(newgender));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                gender4.setText("");
-            }
-        });
-
-        weight3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!(weight4.getText().equals(""))) {
-                    float newweight = Float.parseFloat(weight4.getText());
-                    try {
-                        controller.UpdateWeight(newweight, userid);
-                        weight2.setText(String.valueOf(newweight));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                weight4.setText("");
-            }
-        });
-
-        height3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!(height4.getText().equals(""))) {
-                    float newheight = Float.parseFloat(height4.getText());
-                    try {
-                        controller.UpdateHeight(newheight, userid);
-                        height2.setText(String.valueOf(newheight));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                height4.setText("");
-            }
-        });
-
-        feedback.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        password3.addActionListener(e -> {
+            if (!(password4.getText().equals(""))) {
+                String newpassword = password4.getText();
                 try {
-                    JOptionPane.showMessageDialog(null,
-                            controller.GiveFeedback(gateway.getAccounts().get(userid).getHeight(),
-                                    gateway.getAccounts().get(userid).getWeight(), userid));
+                    controller.UpdatePassword(newpassword, userid);
+                    password2.setText(newpassword);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
+            password4.setText("");
         });
 
-        editrecipe.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        age3.addActionListener(e -> {
+            if (!(age4.getText().equals(""))) {
+                int newage = Integer.parseInt(age4.getText());
                 try {
-                    RecipeInitialDisplay rd = new RecipeInitialDisplay(userid);
+                    controller.UpdateAge(newage, userid);
+                    age2.setText(String.valueOf(newage));
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
+            age4.setText("");
         });
 
-        exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
+        gender3.addActionListener(e -> {
+            if (!(gender4.getText().equals(""))) {
+                char newgender = gender4.getText().charAt(0);
+                try {
+                    controller.UpdateGender(newgender, userid);
+                    gender2.setText(String.valueOf(newgender));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            gender4.setText("");
+        });
+
+        weight3.addActionListener(e -> {
+            if (!(weight4.getText().equals(""))) {
+                float newweight = Float.parseFloat(weight4.getText());
+                try {
+                    controller.UpdateWeight(newweight, userid);
+                    weight2.setText(String.valueOf(newweight));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            weight4.setText("");
+        });
+
+        height3.addActionListener(e -> {
+            if (!(height4.getText().equals(""))) {
+                float newheight = Float.parseFloat(height4.getText());
+                try {
+                    controller.UpdateHeight(newheight, userid);
+                    height2.setText(String.valueOf(newheight));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            height4.setText("");
+        });
+
+        feedback.addActionListener(e -> {
+            try {
+                JOptionPane.showMessageDialog(null,
+                        controller.GiveFeedback(gateway.getAccounts().get(userid).getHeight(),
+                                gateway.getAccounts().get(userid).getWeight(), userid));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
+
+        editrecipe.addActionListener(e -> {
+            try {
+                new RecipeInitialDisplay(userid);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        exit.addActionListener(e -> dispose());
 
         this.add(main);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
