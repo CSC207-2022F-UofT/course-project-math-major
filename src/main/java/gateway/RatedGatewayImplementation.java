@@ -1,3 +1,9 @@
+/**
+ * This class override methods in RatedGateway.
+ * Method saveRatedRecipes overrides the save method, it save a map of userid to map of recipe name to score into the
+rated recipe file.
+ * Method getRatedRecipes overrides the get method, it gets the map from the rated recipe file.
+ */
 package gateway;
 
 import entity.Rank;

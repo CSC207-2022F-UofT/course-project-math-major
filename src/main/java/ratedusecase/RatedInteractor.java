@@ -1,3 +1,9 @@
+/**
+ * This class retrieve data from ratedfile.csv, update recipe scores or give score to new recipes.
+ * RatedUser_AllRecipe method rates given recipes.
+ * RatedInteractor method retrieves data from ratedfile.csv, call the RatedUser_AllRecipe method, and save updated data.
+*/
+
 package ratedusecase;
 
 import gateway.*;
