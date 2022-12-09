@@ -4,6 +4,7 @@ package recipeui;
 import controller.RecipeController;
 import entity.Ingredient;
 import entity.Recipe;
+import ui.SearchingDisplay;
 
 import java.awt.*;
 import java.io.IOException;
@@ -137,6 +138,7 @@ public class RecipeInitialDisplay {
             // open new SearchDisplay Page
             //new SearchingDisplay();
         });
+
     }
 
 }
