@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-
+/**  This class is the presenter that visualizes the entity.Recipe. It creates a UI for Users to see the information of their Recipes
+ This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
+ load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay **/
 public class RecipeInitialDisplay {
 
     final int width = 1200;
@@ -22,9 +23,7 @@ public class RecipeInitialDisplay {
     JList<Ingredient> ingredientList;
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
-    /**  This class is the presenter that visualizes the entity.Recipe. It creates a UI for Users to see the information of their Recipes
-     This is primarily the InitialDisplay of the Recipe book, which takes in the previously stored Recipes in the gateways to
-     load them into the Recipe. This class should be used at the user interface instead of RecipeDisplay **/
+
     public RecipeInitialDisplay(String userid) throws IOException {
         JFrame f = new JFrame("Recipe Application");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,7 +92,7 @@ public class RecipeInitialDisplay {
 
         // Ingredient JList
         ingredientsListModel = new DefaultListModel<>();
-        ingredientList = new JList(ingredientsListModel);
+        ingredientList = new JList<>(ingredientsListModel);
         ingredientList.setFixedCellHeight(30);
         ingredientList.setPreferredSize(new Dimension(width/3 - 50, height/2));
         JScrollPane isp = new JScrollPane(ingredientList);
@@ -119,7 +118,7 @@ public class RecipeInitialDisplay {
 
 
         /* Creation of a Panel to place on the bottom (Creation) */
-        JButton createRecipeBtn = new JButton("Create Recipe or Delete Recipes");
+        JButton createRecipeBtn = new JButton("Create or Delete Recipe");
         panel.add(createRecipeBtn, BorderLayout.BEFORE_FIRST_LINE);
 
         JButton closeRecipe = new JButton("Close Recipe");
@@ -136,7 +135,7 @@ public class RecipeInitialDisplay {
         panel.add(searchRecipe,BorderLayout.PAGE_START);
         searchRecipe.addActionListener(e ->{
             // open new SearchDisplay Page
-            new SearchingDisplay();
+            //new SearchingDisplay();
         });
 
     }

@@ -12,6 +12,7 @@ import recipeui.RecipeInitialDisplay;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serial;
 
 /** This is the User Interface of the Account Information System. Users can view and update their personal
  * information here and see the feedback. They can also go to other systems like rank system and recipe system
@@ -19,6 +20,8 @@ import java.io.IOException;
 
 public class UserInfoDisplay extends JFrame {
 
+    @Serial
+    private static final long serialVersionUID = 6387370993293702225L;
     final String userid;
     JPanel main = new JPanel();
 
@@ -67,22 +70,18 @@ public class UserInfoDisplay extends JFrame {
         /**
          * This is a user-triggered method that will show the rank of users with that userid
          */
-        showrank.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
+        showrank.addActionListener(e -> {
+            RankingRequestModel rankingRequestModel = new RankingRequestModel(userid,null);
 
-                RatedGateway ratedGateway = new RatedGatewayImplementation();
-                MainDisplay mainDisplay = new MainDisplay();
-                RankingOutputBoundary rankingOutputBoundary = new RankingPresenter(mainDisplay);
-                RankingInputBoundary rankingInputBoundary = new RankingInteractor(ratedGateway, rankingRequestModel, rankingOutputBoundary);
+            RatedGateway ratedGateway = new RatedGatewayImplementation();
+            MainDisplay mainDisplay = new MainDisplay();
+            RankingOutputBoundary rankingOutputBoundary = new RankingPresenter(mainDisplay);
+            RankingInputBoundary rankingInputBoundary = new RankingInteractor(ratedGateway, rankingRequestModel, rankingOutputBoundary);
 
-                RankingController rankingController = new RankingController(rankingInputBoundary);
-                RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
+            RankingController rankingController = new RankingController(rankingInputBoundary);
+            RankingResponseModel rankingResponseModel = rankingController.rank(rankingRequestModel);
 
-                rankingOutputBoundary.showQueryRank(rankingResponseModel);
-            }
-
+            rankingOutputBoundary.showQueryRank(rankingResponseModel);
         });
 
         JPanel passwordPanel = new JPanel();

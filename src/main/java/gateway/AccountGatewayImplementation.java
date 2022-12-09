@@ -39,7 +39,12 @@ public class AccountGatewayImplementation implements AccountGateway {
 
     @Override
     public boolean addAccount(String userid, String password) throws IOException {
-        Map<String, UserAccount> accounts = this.getAccounts();
+        Map<String, UserAccount> accounts;
+        try {
+            accounts = this.getAccounts();
+        } catch (IOException e) {
+            accounts = new HashMap<>();
+        }
         if (accounts.containsKey(userid)) {
             return false;
         }
