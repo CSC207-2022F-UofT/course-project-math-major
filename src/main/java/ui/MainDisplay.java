@@ -55,6 +55,8 @@ public class MainDisplay extends JFrame {
                 showRank(userId);
             }
         });
+
+
     }
 
     private void showRank(String userId) {
@@ -80,6 +82,8 @@ public class MainDisplay extends JFrame {
             e.printStackTrace();
         }
     }
+
+
 
 
 }
