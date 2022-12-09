@@ -16,6 +16,13 @@ Giving feedback based on the healthiness of the Recipe and ranking them based on
 - SDK: Amazon Correto version 18.0.2
 - Language Level: SDK default(18)
 
+##Design Pattern
+RankingSystem:
+- Factory: this design pattern is only used when the rating systems and the recipe creating system not constructed
+  This class has createRank() and getInstance() method for generating and obtain temporary test instance.
+- Comparator: Rank uses RankingComparactor as a design pattern when two rated recipe need to be compared.
+- Observer: the ranking and scoring system also uses an observer pattern so that the program can efficiently handle each recipe update.
+
 ## How to use the Recipe Application!
 **1. Running the Program and Login
 Find ProjectMain in `java/ui/ProjectMain.java`, This should be the only part runnable in the whole project. Run this class and it will prompt you to a login page.

@@ -1,15 +1,22 @@
 package entity;
 
-import java.io.Serializable;
-
-// Here we use a design pattern Serializable, so Rank can iterate
-public class Rank implements Serializable {
+/**
+ * The Rank class represents a rated recipe of a user
+ * which has a recipe name and a score for the recipe
+ * This class has getter and setter method for the name and the rate
+ */
+public class Rank{
     private String name;
     private double value;
 
-    public Rank(String name, double rank) {
+    /**
+     * This method generates an instance of the scored recipe
+     * @param name The name of the recipe of the user
+     * @param value The score of the recipe of the user
+     */
+    public Rank(String name, double value) {
         this.name = name;
-        this.value = rank;
+        this.value = value;
     }
 
     public String getName() {

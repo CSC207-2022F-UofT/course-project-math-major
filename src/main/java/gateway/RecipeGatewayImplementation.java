@@ -1,5 +1,6 @@
 package gateway;
 
+import controller.RecipeRatingController;
 import entity.Recipe;
 import entity.UserAccount;
 
@@ -30,19 +31,22 @@ public class RecipeGatewayImplementation implements RecipeGateway {
     public void addRecipe(Recipe r, String userid) throws IOException {
         AccountGateway ag = new AccountGatewayImplementation();
         Map<String, UserAccount> user = ag.getAccounts();
+        RecipeRatingController c = new RecipeRatingController();
         recipes.add(r);
         user.get(userid).setRecipeBook(recipes);
         ag.saveAccounts(user);
-
+        c.RecipeRatingController(userid);
     }
 
     @Override
     public void deleteRecipe(String userid, ArrayList<Recipe> recipe) throws IOException {
         AccountGateway ag = new AccountGatewayImplementation();
         Map<String, UserAccount> user = ag.getAccounts();
+        RecipeRatingController c = new RecipeRatingController();
         recipes = recipe;
         user.get(userid).setRecipeBook(recipes);
         ag.saveAccounts(user);
+        c.RecipeRatingController(userid);
     }
 
     //Loads the Initial Recipes stored in the dataset
