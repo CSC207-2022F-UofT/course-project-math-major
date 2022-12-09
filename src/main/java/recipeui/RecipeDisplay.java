@@ -4,6 +4,7 @@ package recipeui;
 import controller.RecipeController;
 import entity.Ingredient;
 import entity.Recipe;
+import ui.SearchingDisplay;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class RecipeDisplay {
 
     DefaultListModel<Ingredient> ingredientsListModel;
     JTextArea steps;
+
 
     public RecipeDisplay(String userid) throws IOException {
         JFrame f = new JFrame("Recipe Application");
@@ -128,9 +130,19 @@ public class RecipeDisplay {
 
         closeRecipe.addActionListener(e -> f.setVisible(false));
         createRecipeBtn.addActionListener(e -> {
-            // open new Page :)
+            // open new CreateRecipe Page :)
             new CreateRecipe(userid);
         });
+
+
+        JButton searchRecipe = new JButton("Search");
+        panel.add(searchRecipe,BorderLayout.PAGE_START);
+        searchRecipe.addActionListener(e ->{
+            // open new SearchDisplay Page
+            new SearchingDisplay();
+        });
+
+
 
     }
 
