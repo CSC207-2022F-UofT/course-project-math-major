@@ -1,12 +1,17 @@
-//package controller;
-//
-//import ratedusecase.RatedInteractor;
-//
-//import java.io.IOException;
-//
-//public abstract class SearchingController{
-//    public void RecipeRatingController(String UserID) throws IOException {
-//        RatedInteractor searchinginteractor = new RatedInteractor();
-//       searchinginteractor.RatedInteractor(UserID);
-//    }
-//}
+package controller;
+import Searching_use_case.SearchingData;
+import Searching_use_case.SearchingInputBoundary;
+import Searching_use_case.SearchingResponse;
+
+
+public class SearchingController {
+    final SearchingInputBoundary searchingInput;
+
+    public SearchingController(SearchingInputBoundary searchingInput){
+        this.searchingInput = searchingInput;
+    }
+
+    public SearchingResponse search(SearchingData data){
+        return this.searchingInput.search(data);
+    }
+}

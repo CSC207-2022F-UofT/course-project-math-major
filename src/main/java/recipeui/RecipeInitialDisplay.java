@@ -131,6 +131,13 @@ public class RecipeInitialDisplay {
             f.setVisible(false);
             new CreateRecipe(userid);
         });
+        
+        JButton searchRecipe = new JButton("Search");
+        panel.add(searchRecipe,BorderLayout.PAGE_START);
+        searchRecipe.addActionListener(e ->{
+            // open new SearchDisplay Page
+            new SearchingDisplay();
+        });
 
     }
 

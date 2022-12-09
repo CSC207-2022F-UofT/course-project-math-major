@@ -63,6 +63,8 @@ public class MainDisplay extends JFrame {
                 showRank(userId);
             }
         });
+
+
     }
 
     /**
@@ -92,6 +94,8 @@ public class MainDisplay extends JFrame {
             e.printStackTrace();
         }
     }
+
+
 
 
 }
