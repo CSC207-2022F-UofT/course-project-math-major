@@ -1,4 +1,4 @@
-package Searching_use_case;
+package gateway;
 import entity.Recipe;
 import java.util.List;
 
