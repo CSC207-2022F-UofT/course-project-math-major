@@ -137,7 +137,6 @@ public class RecipeInitialDisplay {
             // open new SearchDisplay Page
             //new SearchingDisplay();
         });
-
     }
 
 }

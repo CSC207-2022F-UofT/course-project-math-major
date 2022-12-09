@@ -52,4 +52,5 @@ public class AccountGatewayImplementation implements AccountGateway {
         this.saveAccounts(accounts);
         return true;
     }
+
 }

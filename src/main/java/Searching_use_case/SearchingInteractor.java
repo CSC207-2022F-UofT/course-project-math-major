@@ -48,8 +48,4 @@
 //        return presenter.prepareSuccessView(response);
 //    }
 //
-//
-//
-//
-//
 //}
