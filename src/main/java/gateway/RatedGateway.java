@@ -1,3 +1,6 @@
+/**
+ * This class is a gateway to save and get recipe score data from ratedrecipe.csv.
+ */
 package gateway;
 
 import entity.Rank;
