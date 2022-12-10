@@ -136,7 +136,7 @@ public class RecipeInitialDisplay {
         panel.add(searchRecipe,BorderLayout.PAGE_START);
         searchRecipe.addActionListener(e ->{
             // open new SearchDisplay Page
-            //new SearchingDisplay();
+            new SearchingDisplay();
         });
 
     }
