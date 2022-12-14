@@ -23,6 +23,8 @@ RankingSystem:
 - Comparator: Rank uses RankingComparactor as a design pattern when two rated recipe need to be compared.
 - Observer: the ranking and scoring system also uses an observer pattern so that the program can efficiently handle each recipe update.
 - Dependency Injection
+- Facade
+
 ## How to use the Recipe Application!
 **1. Running the Program and Login
 Find ProjectMain in `java/ui/ProjectMain.java`, This should be the only part runnable in the whole project. Run this class and it will prompt you to a login page.
